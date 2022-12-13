@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HogeschoolPXL.Data;
 using HogeschoolPXL.Models;
+using Microsoft.AspNetCore.Authorization;
+using HogeschoolPXL.Data.DefaultData;
 
 namespace HogeschoolPXL.Controllers
 {
@@ -20,12 +22,14 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Cursus
+        [Authorize(Roles = Roles.student)]
         public async Task<IActionResult> Index()
         {
               return View(await _context.Cursus.ToListAsync());
         }
 
         // GET: Cursus/Details/5
+        [Authorize(Roles = Roles.student)]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Cursus == null)
@@ -44,6 +48,7 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Cursus/Create
+        [Authorize(Roles = Roles.admin)]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +59,7 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Create([Bind("CursusId,CursusNaam")] Cursus cursus)
         {
             if (ModelState.IsValid)
@@ -66,6 +72,7 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Cursus/Edit/5
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Cursus == null)
@@ -86,6 +93,7 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Edit(int id, [Bind("CursusId,CursusNaam")] Cursus cursus)
         {
             if (id != cursus.CursusId)
@@ -117,6 +125,7 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Cursus/Delete/5
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Cursus == null)
@@ -137,6 +146,7 @@ namespace HogeschoolPXL.Controllers
         // POST: Cursus/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Cursus == null)

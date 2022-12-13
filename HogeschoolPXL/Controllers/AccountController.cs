@@ -57,27 +57,34 @@ namespace HogeschoolPXL.Controllers
         {
             if (ModelState.IsValid)
             {
-                var identityUser = new IdentityUser();
-                identityUser.Email = registerViewModel.Email;
-                identityUser.UserName = registerViewModel.Email;
-                var identityResult = await _userManager.CreateAsync(identityUser, registerViewModel.Password);
-                // check if login is succeeded  
-                if (identityResult.Succeeded)
+                if (registerViewModel.RoleId != null)
                 {
-                    var identityRole = await _roleManager.FindByIdAsync(registerViewModel.RoleId);
-
-                    // add role asynchronus identityuser and roleid     
-                    var roleResult = await _userManager.AddToRoleAsync(identityUser, identityRole.Name);
-                    // return login if result succeeded
-                    if (roleResult.Succeeded)
+                    var identityUser = new IdentityUser();
+                    identityUser.Email = registerViewModel.Email;
+                    identityUser.UserName = registerViewModel.Email;
+                    var identityResult = await _userManager.CreateAsync(identityUser, registerViewModel.Password);
+                    // check if login is succeeded  
+                    if (identityResult.Succeeded)
                     {
-                        return View("RegistrationCompleted","Login");
+                        var identityRole = await _roleManager.FindByNameAsync(registerViewModel.RoleId);
+
+                        // add role asynchronus identityuser and roleid     
+                        var roleResult = await _userManager.AddToRoleAsync(identityUser, identityRole.Name);
+                        // return login if result succeeded
+                        if (roleResult.Succeeded)
+                        {
+                            return View("RegistrationCompleted");
+                        }
+                    }
+                    foreach (var error in identityResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                        return View();
                     }
                 }
-                foreach (var error in identityResult.Errors)
+                else
                 {
-                    ModelState.AddModelError("", error.Description);
-                    return View();
+                    ModelState.AddModelError("", "Geen rol geselecteerd");
                 }
             }
             return View();
@@ -97,6 +104,7 @@ namespace HogeschoolPXL.Controllers
         {  
             var identityViewModel = new IdentityViewModel();
             identityViewModel.Roles = _roleManager.Roles;
+            identityViewModel.Users = _userManager.Users;
             return View(identityViewModel);
         }
         #endregion

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HogeschoolPXL.Data;
 using HogeschoolPXL.Models;
+using Microsoft.AspNetCore.Authorization;
+using HogeschoolPXL.Data.DefaultData;
 
 namespace HogeschoolPXL.Controllers
 {
@@ -44,6 +46,7 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Student/Create
+        [Authorize(Roles = Roles.admin)]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +57,7 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Create([Bind("StudentID,GebruikerID")] Student student)
         {
             if (ModelState.IsValid)
@@ -66,6 +70,7 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Student/Edit/5
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Studenten == null)
@@ -86,6 +91,7 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Edit(int id, [Bind("StudentID,GebruikerID")] Student student)
         {
             if (id != student.StudentID)
@@ -117,6 +123,7 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Student/Delete/5
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Studenten == null)
@@ -137,6 +144,7 @@ namespace HogeschoolPXL.Controllers
         // POST: Student/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Studenten == null)

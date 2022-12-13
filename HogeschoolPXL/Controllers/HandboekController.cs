@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using HogeschoolPXL.Data;
 using HogeschoolPXL.Models;
+using Microsoft.AspNetCore.Authorization;
+using HogeschoolPXL.Data.DefaultData;
 
 namespace HogeschoolPXL.Controllers
 {
@@ -20,12 +22,14 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Handboek
+        [Authorize(Roles = Roles.student)]
         public async Task<IActionResult> Index()
         {
               return View(await _context.Handboeken.ToListAsync());
         }
 
         // GET: Handboek/Details/5
+        [Authorize(Roles = Roles.student)]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Handboeken == null)
@@ -44,6 +48,7 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Handboek/Create
+        [Authorize(Roles = Roles.admin)]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +59,7 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Create([Bind("HandboekID,Titel,UitgifteDatum,Afbeelding")] Handboek handboek)
         {
             if (ModelState.IsValid)
@@ -66,6 +72,7 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Handboek/Edit/5
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Handboeken == null)
@@ -86,6 +93,7 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Edit(int id, [Bind("HandboekID,Titel,UitgifteDatum,Afbeelding")] Handboek handboek)
         {
             if (id != handboek.HandboekID)
@@ -117,6 +125,7 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Handboek/Delete/5
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Handboeken == null)
@@ -137,6 +146,7 @@ namespace HogeschoolPXL.Controllers
         // POST: Handboek/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Handboeken == null)
