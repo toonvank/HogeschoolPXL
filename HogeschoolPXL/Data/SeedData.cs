@@ -1,15 +1,37 @@
-﻿using HogeschoolPXL.Models;
+﻿using HogeschoolPXL.Data.DefaultData;
+using HogeschoolPXL.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace HogeschoolPXL.Data
 {
     public static class SeedData
     {
-        public static void EnsurePopulated(WebApplication app)
+        private static async Task VoegRolToeAsync(RoleManager<IdentityRole> _roleManager, string roleName)
+        {
+            if (!await _roleManager.RoleExistsAsync(roleName))
+            {
+                IdentityRole role = new IdentityRole(roleName);
+                await _roleManager.CreateAsync(role);
+            }
+        }
+        private static async Task VoegRollenToeAsync(ApplicationDbContext _context, RoleManager<IdentityRole> _roleManager)
+        {
+            if (!_context.Roles.Any())
+            {
+                await VoegRolToeAsync(_roleManager, Roles.admin);
+                await VoegRolToeAsync(_roleManager, Roles.student);
+                await VoegRolToeAsync(_roleManager, Roles.lector);
+            }
+        }
+        public static async Task EnsurePopulatedAsync(WebApplication app)
         {
             using (var scope = app.Services.CreateScope())
             {
                 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                var _roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                await VoegRollenToeAsync(context, _roleManager);
 
                 if (!context.Studenten.Any())
                 {
