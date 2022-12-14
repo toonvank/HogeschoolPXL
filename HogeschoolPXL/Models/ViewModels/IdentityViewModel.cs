@@ -6,5 +6,6 @@ namespace HogeschoolPXL.Models.ViewModels
     {
         public IEnumerable<IdentityUser>? Users { get; set; }
         public IEnumerable<IdentityRole>? Roles { get; set; }
+        public string? RoleId { get; set; }
     }
 }

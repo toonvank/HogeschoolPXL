@@ -62,9 +62,16 @@ namespace HogeschoolPXL.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(inschrijving);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (_context.Studenten.Any())
+                {
+                    _context.Add(inschrijving);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Enkel toegelaten als er studenten zijn en een cursus");
+                }
             }
             return View(inschrijving);
         }

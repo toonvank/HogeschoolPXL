@@ -55,6 +55,7 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         public async Task<IActionResult> RegisterAsync(RegisterViewModel registerViewModel)
         {
+            ViewData["RoleId"] = new SelectList(_context.Roles);
             if (ModelState.IsValid)
             {
                 if (registerViewModel.RoleId != null)
@@ -103,10 +104,28 @@ namespace HogeschoolPXL.Controllers
         public IActionResult Identity()
         {  
             var identityViewModel = new IdentityViewModel();
+            ViewData["RoleId"] = new SelectList(_context.Roles);
             identityViewModel.Roles = _roleManager.Roles;
             identityViewModel.Users = _userManager.Users;
             return View(identityViewModel);
         }
         #endregion
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> UserClaimAsync()
+        {
+
+            if (_signInManager.IsSignedIn(User))
+            {
+                var identityUser = await _userManager.GetUserAsync(User);
+                if (identityUser != null)
+                    return View("UserClaim", identityUser);
+            }
+            return View("Login");
+        }
     }
 }

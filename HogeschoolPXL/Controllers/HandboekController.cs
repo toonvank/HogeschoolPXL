@@ -22,14 +22,14 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Handboek
-        [Authorize(Roles = Roles.student)]
+        [Authorize(Roles = Roles.student + "," + Roles.admin)]
         public async Task<IActionResult> Index()
         {
               return View(await _context.Handboeken.ToListAsync());
         }
 
         // GET: Handboek/Details/5
-        [Authorize(Roles = Roles.student)]
+        [Authorize(Roles = Roles.student + "," + Roles.admin)]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Handboeken == null)

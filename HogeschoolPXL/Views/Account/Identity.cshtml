@@ -28,6 +28,7 @@
                 <td>@role.Id</td>
                 <td>@role.Name</td>
                 <td role="@role.Id"></td>
+                <td><select class="form-control" asp-items="ViewBag.RoleId" asp-controller="Account" asp-action=""></select></td>
             </tr>
         }
     </table>

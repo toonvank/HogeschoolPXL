@@ -22,14 +22,14 @@ namespace HogeschoolPXL.Controllers
         }
 
         // GET: Cursus
-        [Authorize(Roles = Roles.student)]
+        [Authorize(Roles = Roles.student + "," + Roles.admin)]
         public async Task<IActionResult> Index()
         {
               return View(await _context.Cursus.ToListAsync());
         }
 
         // GET: Cursus/Details/5
-        [Authorize(Roles = Roles.student)]
+        [Authorize(Roles = Roles.student + "," + Roles.admin)]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Cursus == null)
@@ -64,9 +64,16 @@ namespace HogeschoolPXL.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cursus);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (_context.Handboeken.Any())
+                {
+                    _context.Add(cursus);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Enkel creatie als er 1 handboek bestaat");
+                }
             }
             return View(cursus);
         }

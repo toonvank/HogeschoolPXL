@@ -9,7 +9,7 @@ namespace HogeschoolPXL.Data
     public static class SeedData
     {
         //identity initaliseren
-        static ApplicationDbContext? context;
+        static ApplicationDbContext? _context;
         static RoleManager<IdentityRole>? _roleManager;
         static UserManager<IdentityUser>? _userManager;
         private static async Task VoegRolToeAsync(RoleManager<IdentityRole> _roleManager, string roleName)
@@ -20,9 +20,9 @@ namespace HogeschoolPXL.Data
                 await _roleManager.CreateAsync(role);
             }
         }
-        private static async Task VoegRollenToeAsync(ApplicationDbContext _context, RoleManager<IdentityRole> _roleManager)
+        private static async Task VoegRollenToeAsync(ApplicationDbContext __context, RoleManager<IdentityRole> _roleManager)
         {
-            if (!_context.Roles.Any())
+            if (!__context.Roles.Any())
             {
                 await VoegRolToeAsync(_roleManager, Roles.admin);
                 await VoegRolToeAsync(_roleManager, Roles.student);
@@ -32,8 +32,7 @@ namespace HogeschoolPXL.Data
         private static async Task CreateIdentityRecordAsync(string userName, string email, string pwd, string role)
         {
 
-            if (_userManager != null && await _userManager.FindByEmailAsync(email) == null &&
-                    await _userManager.FindByNameAsync(userName) == null)
+            if (_userManager != null && await _userManager.FindByEmailAsync(email) == null && await _userManager.FindByNameAsync(userName) == null)
             {
                 var identityUser = new IdentityUser() { Email = email, UserName = userName };
                 var result = await _userManager.CreateAsync(identityUser, pwd);
@@ -47,10 +46,10 @@ namespace HogeschoolPXL.Data
         {
             using (var scope = app.Services.CreateScope())
             {
-                context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                _context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
                 _userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
                 _roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-                await VoegRollenToeAsync(context, _roleManager);
+                await VoegRollenToeAsync(_context, _roleManager);
                 await CreateIdentityRecordAsync(Roles.student, "student@pxl.be", "Student123!", Roles.student);
                 await CreateIdentityRecordAsync(Roles.admin, "admin@pxl.be", "Admin456!", Roles.admin);
                 VoegStandaardDataToe();
@@ -58,52 +57,52 @@ namespace HogeschoolPXL.Data
         }
         public static void VoegStandaardDataToe()
         {
-            if (!context.Studenten.Any())
+            if (!_context.Studenten.Any())
             {
                 Gebruiker g = new Gebruiker() { GebruikerID = 0, Naam = "Van Kimmenade", Voornaam = "Anton", Email = "toonvankimmenade@gmail.com" };
                 Gebruiker g2 = new Gebruiker() { Naam = "Palmaers", Voornaam = "Kristof", Email = "palmaerskristof@gmail.com" };
                 Student s = new Student() { StudentID = 0, GebruikerID = 0 };
-                context.Gebruiker.Add(g);
-                context.Gebruiker.Add(g2);
-                context.Studenten.Add(s);
-                context.SaveChanges();
+                _context.Gebruiker.Add(g);
+                _context.Gebruiker.Add(g2);
+                _context.Studenten.Add(s);
+                //_context.SaveChanges();
             }
-            if (!context.Lectoren.Any())
+            if (!_context.Lectoren.Any())
             {
                 Lector l = new Lector { GebruikerID = 1, LectorID = 0 };
-                context.Lectoren.Add(l);
-                context.SaveChanges();
+                _context.Lectoren.Add(l);
+                //_context.SaveChanges();
             }
-            if (!context.Handboeken.Any())
+            if (!_context.Handboeken.Any())
             {
                 Handboek h = new Handboek { Titel = "C# Web 1", UitgifteDatum = DateTime.Now, HandboekID = 0, };
-                context.Handboeken.Add(h);
-                context.SaveChanges();
+                _context.Handboeken.Add(h);
+                //_context.SaveChanges();
             }
-            if (!context.Vakken.Any())
+            if (!_context.Vakken.Any())
             {
                 Vak v = new Vak { VakId = 0, VakNaam = "C# Web 1", HandboekID = 0, Studiepunten = 6 };
-                context.Vakken.Add(v);
-                context.SaveChanges();
+                _context.Vakken.Add(v);
+                //_context.SaveChanges();
             }
-            if (!context.VakLectoren.Any())
+            if (!_context.VakLectoren.Any())
             {
                 VakLector v = new VakLector { LectorID = 0, VakId = 0, VakLectorID = 0, };
-                context.VakLectoren.Add(v);
-                context.SaveChanges();
+                _context.VakLectoren.Add(v);
+                //_context.SaveChanges();
             }
-            if (!context.AcademieJaren.Any())
+            if (!_context.AcademieJaren.Any())
             {
                 AcademieJaar a = new AcademieJaar { AcademieJaarID = 0, StartDatum = new DateTime(2021, 9, 20) };
-                context.AcademieJaren.Add(a);
-                context.SaveChanges();
+                _context.AcademieJaren.Add(a);
+                //_context.SaveChanges();
             }
-            if (!context.Inschrijvingen.Any())
+            if (!_context.Inschrijvingen.Any())
             {
                 Inschrijving i = new Inschrijving { AcademieJaarID = 0, InschrijvingID = 0, VakLectorID = 0, StudentID = 0 };
-                context.Inschrijvingen.Add(i);
-                context.SaveChanges();
+                _context.Inschrijvingen.Add(i);
             }
+            _context.SaveChanges();
         }
     }
 }
