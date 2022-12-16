@@ -31,10 +31,8 @@
         {
             <tr>
                 <td>@role.Id</td>
-                <td id="roleName">@role.Name</td>
+                <td>@role.Name</td>
                 <td role="@role.Id"></td>
-                <td><select id="roleSelect" class="form-control" asp-items="ViewBag.RoleId"></select></td>
-                <td><a class="btn btn-primary" asp-controller="Account" asp-action="UserClaim('@role.Id')">Update</a></td>
             </tr>
         }
     </table>
@@ -44,25 +42,30 @@
                 <th>UserRoles</th>
             </tr>
         </thead>
-        <tr><th>ID</th><th>Name</th><th>Role</th></tr>
+        <tr><th>ID</th><th>Name</th><th>Change Role</th></tr>
         @foreach (var user in Model.Users)
         {
             <tr>
                 <td>@user.Id</td>
                 <td>@user.UserName</td>
+                <td style="visibility:hidden;" id="roleName" user-role="@user"></td>
                 <td><select id="roleSelect" class="form-control" asp-items="ViewBag.RoleId"></select></td>
+                <td><a class="btn btn-primary" asp-controller="Account" asp-action="ChangeUserRole" asp-route-user="@user">Update</a></td>
+                //find a way to pass user to controller
+                // find a way to pass selected index on select roleselect to controller
             </tr>
         }
     </table>
     <script>
-    var select = document.getElementById("roleSelect");
-    var roleName = document.getElementById("roleName").innerHTML;
-    for (var i = 0; i < select.options.length; i++) {
-        if (select.options[i].value == roleName) {
-            select.selectedIndex = i;
-                console.log(select.options[i].value);
-            break;
+    var select = document.querySelectorAll("#roleSelect");
+    var roleName = document.querySelectorAll("#roleName");
+    for (var j = 0; j < select.length; j++) {
+        for (var i = 0; i < select[j].options.length; i++) {
+            if (select[j].options[i].value == roleName[j].innerHTML)  {
+                select[j].selectedIndex = i;
+                break;
+            }
         }
-    }                    
+    }                
     </script>
 }

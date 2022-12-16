@@ -126,5 +126,10 @@ namespace HogeschoolPXL.Controllers
             }
             return View("Login");
         }
+        [HttpGet]
+        public IActionResult ChangeUserRole(IdentityUser user, int index)
+        {
+            return View("Identity");
+        }
     }
 }
