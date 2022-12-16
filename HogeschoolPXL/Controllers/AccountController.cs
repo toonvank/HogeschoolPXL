@@ -118,7 +118,6 @@ namespace HogeschoolPXL.Controllers
         [HttpGet]
         public async Task<IActionResult> UserClaimAsync()
         {
-
             if (_signInManager.IsSignedIn(User))
             {
                 var identityUser = await _userManager.GetUserAsync(User);
