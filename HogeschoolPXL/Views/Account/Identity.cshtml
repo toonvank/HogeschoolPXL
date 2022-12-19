@@ -1,9 +1,10 @@
-﻿    @*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IdentityViewModel
 @{
+    void Selection_Change(Object sender, EventArgs e)
+    {
+        
+    }
 }
-@model IdentityViewModel
 @if (Model.Roles != null)
 {
     <table class="table">
@@ -36,6 +37,7 @@
             </tr>
         }
     </table>
+    <script>let index;</script>
     <table>
         <thead>
             <tr>
@@ -45,20 +47,19 @@
         <tr><th>ID</th><th>Name</th><th>Change Role</th></tr>
         @foreach (var user in Model.Users)
         {
-            <tr>
+            <tr>    
                 <td>@user.Id</td>
                 <td>@user.UserName</td>
                 <td style="visibility:hidden;" id="roleName" user-role="@user"></td>
-                <td><select id="roleSelect" class="form-control" asp-items="ViewBag.RoleId"></select></td>
-                <td><a class="btn btn-primary" asp-controller="Account" asp-action="ChangeUserRole" asp-route-user="@user">Update</a></td>
-                //find a way to pass user to controller
-                // find a way to pass selected index on select roleselect to controller
+                <td><select id="roleSelect" onchange="updateIndex(this)" class="form-control" asp-items="ViewBag.RoleId"></select></td>
+                <td><a id="btnUpdate" class="btn btn-primary"  asp-controller="Account" asp-action="ChangeUserRole" asp-route-userid="@user.Id" asp-route-index="5">Update</a></td>
             </tr>
         }
     </table>
     <script>
     var select = document.querySelectorAll("#roleSelect");
     var roleName = document.querySelectorAll("#roleName");
+    
     for (var j = 0; j < select.length; j++) {
         for (var i = 0; i < select[j].options.length; i++) {
             if (select[j].options[i].value == roleName[j].innerHTML)  {
@@ -66,6 +67,10 @@
                 break;
             }
         }
-    }                
+    }
+    
+    function updateIndex(elem){
+        index = elem.selectedIndex;
+    }
     </script>
 }

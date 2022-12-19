@@ -126,10 +126,14 @@ namespace HogeschoolPXL.Controllers
             }
             return View("Login");
         }
-        [HttpGet]
-        public IActionResult ChangeUserRole(IdentityUser user, int index)
+        [HttpGet("default/{index} {userid}")]
+        //[HttpPost]
+        public async Task<IActionResult> ChangeUserRole(int index, string userid)
         {
-            return View("Identity");
+            var identityUser = await _userManager.FindByIdAsync(userid);
+            await _userManager.RemoveFromRoleAsync(identityUser, _userManager.GetRolesAsync(identityUser).Result[index]);
+            await _userManager.AddToRoleAsync(identityUser, _roleManager.Roles.ToList()[index].Name);
+            return View("Login");
         }
     }
 }
