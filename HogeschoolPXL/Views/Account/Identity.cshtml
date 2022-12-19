@@ -1,10 +1,4 @@
 ﻿@model IdentityViewModel
-@{
-    void Selection_Change(Object sender, EventArgs e)
-    {
-        
-    }
-}
 @if (Model.Roles != null)
 {
     <table class="table">
@@ -47,13 +41,17 @@
         <tr><th>ID</th><th>Name</th><th>Change Role</th></tr>
         @foreach (var user in Model.Users)
         {
-            <tr>    
-                <td>@user.Id</td>
-                <td>@user.UserName</td>
-                <td style="visibility:hidden;" id="roleName" user-role="@user"></td>
-                <td><select id="roleSelect" onchange="updateIndex(this)" class="form-control" asp-items="ViewBag.RoleId"></select></td>
-                <td><a id="btnUpdate" class="btn btn-primary"  asp-controller="Account" asp-action="ChangeUserRole" asp-route-userid="@user.Id" asp-route-index="5">Update</a></td>
-            </tr>
+            <form asp-action="ChangeUserRole">
+                <tr>    
+                    <td>@user.Id</td>
+                    <input asp-for="UserID"style="visibility:hidden;"value="@user.Id">
+                    <td>@user.UserName</td>
+                    <td style="display:none;" id="roleName" user-role="@user"></td>
+                    <td><select id="roleSelect" asp-for="RoleId" class="form-control" asp-items="ViewBag.RoleId"></select></td>
+                    @*<td><a id="btnUpdate" class="btn btn-primary"  asp-controller="Account" asp-action="ChangeUserRole">Update</a></td>*@
+                    <td><input type="submit" id="btnUpdate" value="Update" class="btn btn-primary"/></td>
+                </tr>
+            </form>
         }
     </table>
     <script>
@@ -67,10 +65,6 @@
                 break;
             }
         }
-    }
-    
-    function updateIndex(elem){
-        index = elem.selectedIndex;
     }
     </script>
 }

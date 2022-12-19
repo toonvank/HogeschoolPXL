@@ -1,5 +1,7 @@
 ﻿using HogeschoolPXL.Data;
+using HogeschoolPXL.Data.DefaultData;
 using HogeschoolPXL.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -101,6 +103,7 @@ namespace HogeschoolPXL.Controllers
         #endregion
         #region identity
         [HttpGet]
+        [Authorize(Roles = Roles.admin)]
         public IActionResult Identity()
         {  
             var identityViewModel = new IdentityViewModel();
@@ -126,14 +129,15 @@ namespace HogeschoolPXL.Controllers
             }
             return View("Login");
         }
-        [HttpGet("default/{index} {userid}")]
-        //[HttpPost]
-        public async Task<IActionResult> ChangeUserRole(int index, string userid)
+        [HttpPost]
+        public async Task<IActionResult> ChangeUserRole(IdentityViewModel identityViewModel)
         {
-            var identityUser = await _userManager.FindByIdAsync(userid);
-            await _userManager.RemoveFromRoleAsync(identityUser, _userManager.GetRolesAsync(identityUser).Result[index]);
-            await _userManager.AddToRoleAsync(identityUser, _roleManager.Roles.ToList()[index].Name);
-            return View("Login");
+            var identityUser = await _userManager.FindByIdAsync(identityViewModel.UserID);
+            // remove all roles from user
+            var roles = await _userManager.GetRolesAsync(identityUser);
+            await _userManager.RemoveFromRolesAsync(identityUser, roles);
+            await _userManager.AddToRoleAsync(identityUser, identityViewModel.RoleId);
+            return View();
         }
     }
 }

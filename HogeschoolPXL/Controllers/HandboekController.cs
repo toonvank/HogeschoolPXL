@@ -12,6 +12,7 @@ using HogeschoolPXL.Data.DefaultData;
 
 namespace HogeschoolPXL.Controllers
 {
+    [Authorize]
     public class HandboekController : Controller
     {
         private readonly ApplicationDbContext _context;
