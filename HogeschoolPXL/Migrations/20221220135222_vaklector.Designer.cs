@@ -4,6 +4,7 @@ using HogeschoolPXL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HogeschoolPXL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221220135222_vaklector")]
+    partial class vaklector
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -190,7 +192,7 @@ namespace HogeschoolPXL.Migrations
                     b.Property<int>("LectorID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VakId")
+                    b.Property<int>("VakId")
                         .HasColumnType("int");
 
                     b.HasKey("VakLectorID");
@@ -419,7 +421,9 @@ namespace HogeschoolPXL.Migrations
 
                     b.HasOne("HogeschoolPXL.Models.Vak", "Vak")
                         .WithMany()
-                        .HasForeignKey("VakId");
+                        .HasForeignKey("VakId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Lector");
 

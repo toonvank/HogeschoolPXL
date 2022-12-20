@@ -4,6 +4,7 @@ namespace HogeschoolPXL.Models
 {
     public class Inschrijving
     {
+        [Key]
         public int InschrijvingID { get; set; }
         public int StudentID { get; set; }
         public int VakLectorID { get; set; }

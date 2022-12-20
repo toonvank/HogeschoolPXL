@@ -4,6 +4,7 @@ using HogeschoolPXL.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HogeschoolPXL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221220125010_pk")]
+    partial class pk
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,9 +67,6 @@ namespace HogeschoolPXL.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdentityUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Naam")
                         .HasColumnType("nvarchar(max)");
 
@@ -75,8 +74,6 @@ namespace HogeschoolPXL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GebruikerID");
-
-                    b.HasIndex("IdentityUserId");
 
                     b.ToTable("Gebruiker");
                 });
@@ -190,14 +187,10 @@ namespace HogeschoolPXL.Migrations
                     b.Property<int>("LectorID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("VakId")
+                    b.Property<int>("VakId")
                         .HasColumnType("int");
 
                     b.HasKey("VakLectorID");
-
-                    b.HasIndex("LectorID");
-
-                    b.HasIndex("VakId");
 
                     b.ToTable("VakLectoren");
                 });
@@ -398,32 +391,6 @@ namespace HogeschoolPXL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("HogeschoolPXL.Models.Gebruiker", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("IdentityUserId");
-
-                    b.Navigation("IdentityUser");
-                });
-
-            modelBuilder.Entity("HogeschoolPXL.Models.VakLector", b =>
-                {
-                    b.HasOne("HogeschoolPXL.Models.Lector", "Lector")
-                        .WithMany()
-                        .HasForeignKey("LectorID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HogeschoolPXL.Models.Vak", "Vak")
-                        .WithMany()
-                        .HasForeignKey("VakId");
-
-                    b.Navigation("Lector");
-
-                    b.Navigation("Vak");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

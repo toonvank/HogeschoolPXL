@@ -24,7 +24,7 @@ namespace HogeschoolPXL.Controllers
         // GET: Gebruiker
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Gebruiker.ToListAsync());
+            return View(await _context.Gebruiker.ToListAsync());
         }
 
         // GET: Gebruiker/Details/5
