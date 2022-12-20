@@ -1,0 +1,191 @@
+﻿@page
+@*@{
+    ViewData["Title"] = "Home page";
+}*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Toon Van Kimmenade</title>
+    <link rel="stylesheet" href="~/css/cv.css">
+    <link href='https://fonts.googleapis.com/css?family=Aleo' rel='stylesheet'>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1.0”>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <a href="cv.html">CV</a>
+    <a href="logboek.html">Logboek</a>
+    <a href="competenties.html">Competenties Programmeur</a>
+    <a href="ontwikkeling.html">Ontwikkelingsgesprekken</a>
+    <a href="opdracht.html">Opdrachten</a>
+    <a href="reflectie.html">Reflectie</a>
+</div>
+<div id="main">
+    <div class="hamburger">
+        <button class="openbtn" onclick="openNav()">☰</button>
+    </div>
+
+<script>
+
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "70%";
+        document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+    }
+
+    const checkpoint = 300;
+</script>
+<div class="parent">
+    <div class="bar">
+        <a class="face" href="https://www.linkedin.com/in/toonvank/" target=”_blank”><img src="assets/face2.jpg" alt="face"></a>
+        <div class="nameparent">
+            <h1 class="name">Toon Van Kimmenade</h1>
+        </div>
+        <h2>C# programmeur in opleiding</h2>
+        <h3>Info</h3>
+        <hr class="purple">
+        <table>
+            <tr>
+                <td><img src="~/assets/calendar.svg" alt="date"></td>
+                <td>4 dec 2000</td>
+            </tr>
+            <tr>
+                <td><img src="~/assets/pin.svg" alt="pin"></td>
+                <td>Genk</td>
+            </tr>
+            <tr>
+                <td><img src="~/assets/home.svg" alt="home"></td>
+                <td>Maasmechelen</td>
+            </tr>
+        </table>
+        <h3>Contact</h3>
+        <hr class="purple">
+        <table>
+            <tr class="contact">
+                <td><a href="mailto: toonvankimmenade@gmail.com"><img src="assets/mail.svg" alt="mail"></a></td>
+                <td><a href="mailto: toonvankimmenade@gmail.com">toonvankimmenade@gmail.com</a></td>
+            </tr>
+            <tr class="contact">
+                <td><img src="~/assets/phone.svg" alt="tel"></td>
+                <td><a href="tel:0489693234">0489693234</a></td>
+            </tr>
+        </table>
+        <h3>Hobby's</h3>
+        <hr class="purple">
+        <ul class="hobbies">
+            <li>Taken automatiseren m.b.v. C#</li>
+            <li>Werken aan eigen programmeerprojecten</li>
+            <li>Hiking</li>
+        </ul>
+    </div>
+    <div class="body">
+        <h1>Wie ben ik?</h1>
+        <p>Ik ben een student aan de PXL in Hasselt. Hier volg ik het tweede jaar in de graduaatsopleiding programmeren. In deze opleiding ligt de focus op C# en webdesign, waar ik beiden een passie voor heb. In mijn vrije tijd ben ik graag bezig met problem solving.</p>
+        <div class="studieparent">
+            <div class="studiechild">
+                <h1>Studies</h1>
+                <table class="studies">
+                    <tr>
+                        <td class="year">2021-2023</td>
+                        <td class="opleiding">Graduaat Programmeren PXL Hasselt</td>
+                    </tr>
+                    <tr class="spacing">
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="year">2016-2018</td>
+                        <td><a class="link" href="https://drive.google.com/file/d/1ROpz74ey_J7ra3amPbkzZPOHfcTCoEoP/view?usp=sharing" target=”_blank”><u>Diploma</u></a> informaticabeheer Provinciale Handelsschool Hasselt</td>
+                    </tr>
+                    <tr class="spacing">
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="year">2012-2018</td>
+                        <td><a class="link" href="https://drive.google.com/file/d/1OUMz9ZKW-Ce_rOmJ0ssjB3hR2TsYzg-6/view?usp=sharing" target=”_blank”><u>Diploma</u></a> algemeen Secundair Onderwijs aan Stedelijke Humaniora Dilsen-Stokkem</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="werk">
+                <h1>Werkervaring</h1>
+                <ul class="ervaring">
+                    <li>Mediaworqs-PrintSimple: PHP - Frameworks Laravel & Drupal <b>(2022)</b></li>
+                    <li>Stagair ICT-afdeling Mecam Dilsen Stokkem : C# applicatie ontwikkeling voor personeelsdienst in bedrijf <b>(2019)</b></li>
+                    <li>Stagair OCMW Maasmechelen : ICT-afdeling personeelsdienst <b>(2018)</b></li>
+                    <li>Stagair Basisschool St. Jan: ICT-onderhoud <b>(2017)</b></li>
+                </ul>
+            </div>
+            </div>
+        <div class="skills">
+            <h1>Skills</h1>
+            <div class="parent">
+                <div class="parent second">
+                    <p class="pchild firstchild">C#</p>
+                    <p class="pchild secondchild"><td><progress value="60" max="100"> 80% </progress></td></p>
+                </div>
+                <div class="parent second">
+                    <p class="pchild firstchild">SQL</p>
+                    <p class="pchild secondchild"><td><progress value="65" max="100"> 80% </progress></td></p>
+                </div>
+                <div class="parent second">
+                    <p class="pchild firstchild">PHP</p>
+                    <p class="pchild secondchild"><td><progress value="30" max="100"> 80% </progress></td></p>
+                </div>
+                <div class="parent second">
+                    <p class="pchild firstchild">HTML/CSS</p>
+                    <p class="pchild secondchild"><td><progress value="75" max="100"> 80% </progress></td></p>
+                </div>
+                <div class="parent second">
+                    <p class="pchild firstchild">Linux</p>
+                    <p class="pchild secondchild"><td><progress value="20" max="100"> 80% </progress></td></p>
+                </div>
+            </div>
+        </div>
+        <h1>Talen</h1>
+        <table class="talen">
+            <tr>
+                <th><b>Taal</b></th>
+                <th><b>Vaardigheid</b></th>
+            </tr>
+            <tr>
+                <td>Nederlands</td>
+                <td>Moedertaal</td>
+            </tr>
+            <tr>
+                <td>Engels</td>
+                <td><progress value="80" max="100"> 80% </progress></td>
+            </tr>
+            <tr>
+                <td>Frans</td>
+                <td><progress value="60" max="100"> 60% </progress></td>
+            </tr>
+            <tr>
+                <td>Grieks</td>
+                <td><progress value="40" max="100"> 40% </progress></td>
+            </tr>
+            <tr>
+                <td>Duits</td>
+                <td><progress value="20" max="100"> 20% </progress></td>
+            </tr>
+        </table>
+        <div class="talenmobile">
+            <div class="parent">
+                <p class="pchild">Nederlands (moedertaal)</p>
+                <p class="pchild">Engels (Uitstekend)</p>
+                <p class="pchild">Frans (Matig)</p>
+                <p class="pchild">Grieks (Matig)</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<div class="hamburger">
+    <button class="openbtn" onclick="openNav()">☰</button>
+</div>
+</html>

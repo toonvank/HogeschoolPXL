@@ -1,0 +1,752 @@
+html {
+    scroll-behavior: smooth;
+}
+
+.background {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.talenmobile {
+}
+
+div.talenmobile {
+    visibility: hidden;
+}
+
+div.body {
+    height: fit-content;
+}
+
+body {
+    font-family: 'Aleo';
+    margin-left: 15vw;
+    margin-right: 15vw;
+    background-image: linear-gradient( rgba(0,0,0,0.3), rgba(0,0,0,0.3) ), url("https://i.ibb.co/KLQ9PKR/wall.jpg");
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+.bar {
+    width: 23%;
+    background-color: #000000;
+    color: white;
+    padding-left: 1.3vw;
+    padding-right: 1.3vw;
+}
+
+.body {
+    padding-left: 1vw;
+    background: #121212;
+    color: white;
+}
+
+.parent {
+    display: flex;
+}
+
+.pchild {
+    padding: 5px;
+    border: 3px solid #FFFADE;
+    margin: 8px;
+}
+
+.bodyparent {
+    display: flex;
+}
+
+.bodychildleft {
+    padding-right: 5%;
+}
+
+hr {
+    margin-right: 30%;
+}
+
+div.body {
+    padding-bottom: 60px;
+    padding-right: 5vw;
+    padding-left: 1vw;
+}
+
+div.bar h3 {
+    transition: font-size 0.2s;
+}
+
+    div.bar h3:hover {
+        font-size: 26px;
+    }
+
+h3 {
+    margin-bottom: 5px;
+}
+
+img {
+    cursor: pointer;
+}
+
+.face img {
+    height: 17vh;
+    width: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+    margin-top: 13px;
+}
+
+    .face img:hover {
+        box-shadow: 0 10px 30px #A87BE3;
+    }
+
+    .face img:active {
+        border: 7px outset #A87BE3;
+        box-shadow: none;
+    }
+
+h1 {
+    color: #A87BE3;
+}
+
+p, td {
+    color: #FDF7FF;
+}
+
+.bar h1, h2 {
+    text-align: center;
+    color: #A87BE3;
+}
+
+.bar h3 {
+    color: #A87BE3;
+}
+
+table.talen tr:nth-child(odd) {
+    background-color: #242038;
+}
+
+table.talen tr:nth-child(even) {
+    background-color: #121212;
+}
+
+a:link {
+    color: white;
+}
+
+a:visited {
+    color: white;
+}
+
+a:active {
+    color: #A87BE3;
+}
+
+a {
+    transition: color 0.7s, font-size 0.1s;
+}
+
+    a:hover {
+        color: #A87BE3;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+hr.purple {
+    border-top: 1px solid #A87BE3;
+}
+
+.name {
+    /*source typewriter: https://codepen.io/kiran-r-raj/pen/LYjoLbM*/
+    height: 70px;
+    border-right: 2px solid #A87BE3;
+    line-height: 70px;
+    overflow: hidden;
+    animation: moveRight 5000ms steps(21) infinite, borderBlink 500ms infinite;
+    white-space: nowrap;
+    font-size: 20px;
+}
+
+h1.name {
+    color: #FDF7FF;
+    transition: color 1s;
+}
+
+    h1.name:hover {
+        color: #7c5aa9;
+    }
+
+div.body {
+    font-size: 15px;
+}
+
+div.bar hr {
+    color: #A87BE3;
+}
+
+.bar table {
+    width: 70%;
+}
+
+.bar li {
+    padding: 5px;
+}
+
+td.year {
+    width: 5.5vw;
+    border-right: 2px solid #FFFADE;
+    font-weight: bold;
+}
+
+td.opleiding {
+    width: 15vw;
+    padding-left: 6px;
+}
+
+tr.spacing {
+    height: 12px;
+}
+
+table.talen td, th, tr {
+    width: 176px;
+    height: 25px;
+    border: 2px solid #3a3359;
+}
+
+table.talen {
+    border-collapse: collapse;
+    text-align: center;
+}
+
+ul {
+    list-style-type: none;
+}
+
+    ul.navbar {
+        list-style-type: none;
+        overflow: hidden;
+        background: #0F2027; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to left, #312043, #0F2027); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to left,#312043, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        left: 0;
+        top: 0;
+        margin-top: 0;
+        margin-bottom: 0px;
+        padding-left: 0px;
+    }
+
+.navbar li {
+    float: left;
+}
+
+    .navbar li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        transition: color 0.4s;
+    }
+
+        .navbar li a:hover {
+            background-color: #ececec;
+            color: black;
+        }
+/* The sidebar menu */
+.sidebar {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: #111; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+}
+
+tr.contact {
+    border: 1px solid white;
+}
+
+    tr.contact img:hover {
+        box-shadow: 1px 3px 5px #A87BE3;
+    }
+/* The sidebar links */
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+    /* When you mouse over the navigation links, change their color */
+    .sidebar a:hover {
+        color: #f1f1f1;
+    }
+
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+/* The button used to open the sidebar */
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    width: 100%;
+}
+
+div.body img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+}
+
+    div.body img.graph {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        height: auto;
+        padding-top: 30px;
+    }
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+.studieparent {
+    display: flex;
+}
+
+.studiechild h1 {
+    margin-top: 2px;
+}
+
+.werk h1 {
+    margin-top: 2px;
+}
+
+div.werk {
+    padding-left: 38px;
+}
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+    transition: margin-left .5s; /* If you want a transition effect */
+}
+
+.hamburger {
+    display: none;
+}
+
+table.studies td {
+    padding-left: 5px;
+}
+
+.footer {
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    list-style-type: none;
+    margin: 0;
+    padding-left: 10px;
+    padding-right: 16px;
+    height: 60px;
+    overflow: hidden;
+    background: #0F2027; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #000000, #0F2027); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #000000, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.center {
+    text-align: center;
+}
+
+.rol {
+    margin-bottom: 20px;
+}
+
+.rolleft {
+    padding-right: 13px;
+    padding-left: 7px;
+}
+
+.title {
+    font-weight: bold;
+}
+
+table.rol {
+    border: 3px solid #A87BE3;
+}
+
+.situering {
+    margin-bottom: 20px;
+}
+
+table.situering {
+    border: 3px solid #A87BE3;
+}
+
+    table.situering td {
+        width: 10%;
+    }
+
+iframe {
+    width: 100%;
+    height: 22%;
+}
+
+.ervaring li {
+    padding-bottom: 21px;
+}
+
+div.skills p {
+    transition: font-size 0.1s;
+}
+
+    div.skills p:hover {
+        font-size: 30px;
+        font-weight: bolder;
+        text-shadow: #3a3359 5px 1px;
+    }
+
+div.body h1 {
+    transition: font-size 0.2s;
+}
+
+    div.body h1:hover {
+        color: white;
+        font-size: 35px;
+    }
+
+.studieparent td.year {
+    transition: color 0.8s;
+}
+
+    .studieparent td.year:hover {
+        color: #A87BE3;
+    }
+
+div.werk li {
+    transition: font-size 0.7s, color 0.7s;
+}
+
+    div.werk li:hover {
+        font-size: 16px;
+        color: #A87BE3;
+        font-weight: bolder;
+    }
+
+table.talen th:hover {
+    color: #A87BE3;
+}
+
+table.talen td {
+    transition: font-size 0.2s;
+}
+
+    table.talen td:hover {
+        font-size: 20px;
+    }
+
+    table.talen td:hover {
+        font-size: 20px;
+    }
+
+table.talen {
+    transition: box-shadow 0.5s;
+}
+
+.hobbies {
+    list-style-type: circle;
+}
+
+table.talen:hover {
+    box-shadow: #2d2733 5px 5px 5px 5px;
+}
+
+.wrapper {
+    position: relative;
+}
+
+.cursor {
+    height: 100%;
+    width: 2px;
+    color: green;
+}
+
+.gallery-item {
+    width: 330px;
+    height: 265px;
+    margin: 10px;
+    text-decoration: none;
+}
+
+    .gallery-item img {
+        position: absolute;
+    }
+
+.text-wrapper {
+    position: relative;
+    width: 265px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+}
+
+    .text-wrapper:hover {
+        transition: all 0.8s ease;
+        background: rgba(0, 0, 0, 0.6);
+        opacity: 1;
+    }
+
+.text {
+    font-size: 1.5em;
+}
+
+.project {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+progress[value] {
+    /* Reset the default appearance */
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 100%;
+}
+
+progress {
+    width: 100%;
+    height: 100%;
+    background-color: #121212;
+    border: none;
+}
+
+    progress::-webkit-progress-bar {
+        background-color: yellow;
+        border-radius: 7px;
+    }
+
+    progress::-webkit-progress-value {
+        background-color: blue;
+        border-radius: 7px;
+        box-shadow: 1px 1px 5px 3px rgba( 255, 0, 0, 0.8 );
+    }
+
+    progress::-moz-progress-bar {
+        background-color: #A87BE3;
+    }
+
+.second {
+    flex-direction: column;
+}
+
+.firstchild {
+    margin-bottom: 0px;
+}
+
+.secondchild {
+    margin-top: 0px;
+}
+
+@keyframes moveRight {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 270px;
+    }
+}
+
+@keyframes borderBlink {
+    0%, 100% {
+        border-right-color: transparent;
+    }
+
+    50% {
+        border-right-color: #A87BE3;
+    }
+}
+
+@media screen and (max-width: 1781px) {
+    div.body {
+        width: 150%;
+    }
+}
+
+@media screen and (max-width: 904px) {
+    h4 {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    iframe {
+        width: 60%;
+        margin-left: 10%;
+    }
+
+    table {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    div.studieparent {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    .nameparent {
+        display: flex;
+        justify-content: center;
+    }
+
+    h1.name {
+        text-align: center;
+    }
+
+    table.talen {
+        visibility: collapse;
+        display: none;
+    }
+
+    .talenmobile {
+        visibility: visible;
+    }
+
+    div.talenmobile {
+        visibility: visible;
+        padding-bottom: 30px;
+    }
+
+    ul {
+        list-style-type: none;
+    }
+
+    h1 {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
+    p {
+        margin-left: 40px;
+        margin-right: 40px;
+        font-size: 20px;
+    }
+
+    body {
+        margin-left: 0vw;
+        margin-right: 0vw;
+    }
+
+    div.parent {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    p.pchild {
+        width: 50%;
+    }
+
+    div#main {
+        margin-top: 0;
+    }
+
+    div.body {
+        padding-top: 20px;
+        padding-right: 0vw;
+        font-size: 15px;
+        width: 100%;
+    }
+
+    .bar {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .body {
+        width: 100%;
+        background: -webkit-linear-gradient(to top, #362148, #312043, #0F2027); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to top, #362148, #312043, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    }
+
+    .body {
+        padding-left: 0px;
+    }
+
+    h1, h3 {
+        text-align: center;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        padding-top: 30px;
+    }
+
+    div.bar {
+    }
+
+    p {
+        text-align: center;
+    }
+
+    .navbar {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    hr {
+        margin-right: 1vw;
+    }
+
+    table.studies {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    table.talen {
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+    }
+
+    td.year {
+        width: 18.5vw;
+    }
+
+    td.opleiding {
+        width: 50vw;
+    }
+
+    img {
+        margin-bottom: 15px;
+    }
+
+    .face img {
+        height: 30vh;
+    }
+}

@@ -133,11 +133,10 @@ namespace HogeschoolPXL.Controllers
         public async Task<IActionResult> ChangeUserRole(IdentityViewModel identityViewModel)
         {
             var identityUser = await _userManager.FindByIdAsync(identityViewModel.UserID);
-            // remove all roles from user
             var roles = await _userManager.GetRolesAsync(identityUser);
             await _userManager.RemoveFromRolesAsync(identityUser, roles);
             await _userManager.AddToRoleAsync(identityUser, identityViewModel.RoleId);
-            return View();
+            return RedirectToAction("Identity");
         }
     }
 }
