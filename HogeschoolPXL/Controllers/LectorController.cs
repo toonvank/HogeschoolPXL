@@ -24,7 +24,7 @@ namespace HogeschoolPXL.Controllers
         // GET: Lector
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Lectoren.ToListAsync());
+              return View(await _context.Lectoren.Include("Gebruiker").ToListAsync());
         }
 
         // GET: Lector/Details/5
@@ -56,7 +56,7 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("LectorID,GebruikerID")] Lector lector)
+        public async Task<IActionResult> Create([Bind("Email,GebruikerID,Gebruiker")] Lector lector)
         {
             if (ModelState.IsValid)
             {

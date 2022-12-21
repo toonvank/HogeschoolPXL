@@ -65,44 +65,44 @@ namespace HogeschoolPXL.Data
                 _context.Gebruiker.Add(g);
                 _context.Gebruiker.Add(g2);
                 _context.Studenten.Add(s);
-                //_context.SaveChanges();
+                _context.SaveChanges();
             }
             if (!_context.Lectoren.Any())
             {
                 Lector l = new Lector { GebruikerID = 1, LectorID = 0 };
                 _context.Lectoren.Add(l);
-                //_context.SaveChanges();
+                _context.SaveChanges();
             }
             if (!_context.Handboeken.Any())
             {
                 Handboek h = new Handboek { Titel = "C# Web 1", UitgifteDatum = DateTime.Now, HandboekID = 0, };
                 _context.Handboeken.Add(h);
-                //_context.SaveChanges();
+                _context.SaveChanges();
             }
             if (!_context.Vakken.Any())
             {
                 Vak v = new Vak { VakId = 0, VakNaam = "C# Web 1", HandboekID = 0, Studiepunten = 6 };
                 _context.Vakken.Add(v);
-                //_context.SaveChanges();
+                _context.SaveChanges();
             }
             if (!_context.VakLectoren.Any())
             {
-                VakLector v = new VakLector { LectorID = 0, VakId = 0, VakLectorID = 0, };
+                VakLector v = new VakLector { LectorID = 0, VakId = 0, VakLectorID = 0 };
                 _context.VakLectoren.Add(v);
-                //_context.SaveChanges();
-            }
+                _context.SaveChanges();
+            };
             if (!_context.AcademieJaren.Any())
             {
                 AcademieJaar a = new AcademieJaar { AcademieJaarID = 0, StartDatum = new DateTime(2021, 9, 20) };
                 _context.AcademieJaren.Add(a);
-                //_context.SaveChanges();
+                _context.SaveChanges();
             }
             if (!_context.Inschrijvingen.Any())
             {
                 Inschrijving i = new Inschrijving { AcademieJaarID = 0, InschrijvingID = 0, VakLectorID = 0, StudentID = 0 };
                 _context.Inschrijvingen.Add(i);
             }
-            _context.SaveChanges();
+            //_context.SaveChanges();
         }
     }
 }

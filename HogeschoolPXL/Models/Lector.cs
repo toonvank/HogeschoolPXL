@@ -7,5 +7,6 @@ namespace HogeschoolPXL.Models
         [Key]
         public int LectorID { get; set; }
         public int GebruikerID { get; set; }
+        public Gebruiker? Gebruiker { get; set; }
     }
 }

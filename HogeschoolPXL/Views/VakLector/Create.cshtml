@@ -1,0 +1,58 @@
+﻿@model HogeschoolPXL.Models.VakLector
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>VakLector</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Lector.Gebruiker.Naam" class="control-label"></label>
+                <input asp-for="Lector.Gebruiker.Naam" class="form-control" />
+                <span asp-validation-for="Lector.Gebruiker.Naam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lector.Gebruiker.Voornaam" class="control-label"></label>
+                <input asp-for="Lector.Gebruiker.Voornaam" class="form-control" />
+                <span asp-validation-for="Lector.Gebruiker.Voornaam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lector.Gebruiker.Email" class="control-label"></label>
+                <input asp-for="Lector.Gebruiker.Email" class="form-control" />
+                <span asp-validation-for="Lector.Gebruiker.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vak.VakNaam" class="control-label"></label>
+                <input asp-for="Vak.VakNaam" class="form-control" />
+                <span asp-validation-for="Vak.VakNaam" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vak.Studiepunten" class="control-label"></label>
+                <input asp-for="Vak.Studiepunten" class="form-control" />
+                <span asp-validation-for="Vak.Studiepunten" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vak.HandboekID" class="control-label"></label>
+                <input asp-for="Vak.HandboekID" class="form-control" />
+                <span asp-validation-for="Vak.HandboekID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

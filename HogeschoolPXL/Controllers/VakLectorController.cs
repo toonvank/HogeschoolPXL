@@ -24,7 +24,7 @@ namespace HogeschoolPXL.Controllers
         // GET: VakLector
         public async Task<IActionResult> Index()
         {
-              return View(await _context.VakLectoren.ToListAsync());
+              return View(_context.VakLectoren.Include("Lector").Include("Vak").ToList());
         }
 
         // GET: VakLector/Details/5
@@ -56,7 +56,7 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VakLectorID,LectorID,VakId")] VakLector vakLector)
+        public async Task<IActionResult> Create([Bind("VakLectorID,LectorID,VakId,Vak,Lector")] VakLector vakLector)
         {
             if (ModelState.IsValid)
             {
@@ -74,8 +74,10 @@ namespace HogeschoolPXL.Controllers
             {
                 return NotFound();
             }
-
-            var vakLector = await _context.VakLectoren.FindAsync(id);
+            
+            var vakLector = await _context.VakLectoren.Include("Lector").Include("Vak").FirstOrDefaultAsync(m => m.VakLectorID == id);
+            var lector = await _context.Lectoren.Include("Gebruiker").FirstOrDefaultAsync(m => m.LectorID == id);
+            vakLector.Lector.Gebruiker = lector.Gebruiker;
             if (vakLector == null)
             {
                 return NotFound();
@@ -88,7 +90,7 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VakLectorID,LectorID,VakId")] VakLector vakLector)
+        public async Task<IActionResult> Edit(int id, [Bind("VakLectorID,LectorID,VakId,Vak,Lector")] VakLector vakLector)
         {
             if (id != vakLector.VakLectorID)
             {
