@@ -11,16 +11,46 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Vak)
+            @Html.DisplayNameFor(model => model.Lector.Gebruiker.Voornaam)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Vak.VakId)
+            @Html.DisplayFor(model => model.Lector.Gebruiker.Voornaam)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Lector)
+            @Html.DisplayNameFor(model => model.Lector.Gebruiker.Naam)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Lector.LectorID)
+            @Html.DisplayFor(model => model.Lector.Gebruiker.Naam)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lector.Gebruiker.Voornaam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Lector.Gebruiker.Voornaam)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Lector.Gebruiker.Email)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Lector.Gebruiker.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Vak.VakNaam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Vak.VakNaam)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Vak.Studiepunten)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Vak.Studiepunten)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Vak.HandboekID)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Vak.HandboekID)
         </dd>
     </dl>
 </div>

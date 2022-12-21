@@ -12,6 +12,31 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="VakLectorID" class="control-label"></label>
+                <input asp-for="VakLectorID" class="form-control" />
+                <span asp-validation-for="VakLectorID" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="LectorID" class="control-label"></label>
+                <input asp-for="LectorID" class="form-control" />
+                <span asp-validation-for="LectorID" class="text-danger"></span>
+            </div>
+             <div class="form-group" style="display:none;">
+                <label asp-for="Lector.Gebruiker.GebruikerID" class="control-label"></label>
+                <input asp-for="Lector.Gebruiker.GebruikerID" class="form-control" />
+                <span asp-validation-for="Lector.Gebruiker.GebruikerID" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="Lector.LectorID" class="control-label"></label>
+                <input asp-for="Lector.LectorID" class="form-control" />
+                <span asp-validation-for="Lector.LectorID" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="Lector.GebruikerID" class="control-label"></label>
+                <input asp-for="Lector.GebruikerID" class="form-control" />
+                <span asp-validation-for="Lector.GebruikerID" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Lector.Gebruiker.Naam" class="control-label"></label>
                 <input asp-for="Lector.Gebruiker.Naam" class="form-control" />
@@ -26,6 +51,16 @@
                 <label asp-for="Lector.Gebruiker.Email" class="control-label"></label>
                 <input asp-for="Lector.Gebruiker.Email" class="form-control" />
                 <span asp-validation-for="Lector.Gebruiker.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="VakId" class="control-label"></label>
+                <input asp-for="VakId" class="form-control" />
+                <span asp-validation-for="VakId" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="display:none;">
+                <label asp-for="Vak.VakId" class="control-label"></label>
+                <input asp-for="Vak.VakId" class="form-control" />
+                <span asp-validation-for="Vak.VakId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Vak.VakNaam" class="control-label"></label>
@@ -43,7 +78,7 @@
                 <span asp-validation-for="Vak.HandboekID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>

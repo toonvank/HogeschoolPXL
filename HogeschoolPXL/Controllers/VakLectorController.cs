@@ -35,8 +35,8 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
 
-            var vakLector = await _context.VakLectoren
-                .FirstOrDefaultAsync(m => m.VakLectorID == id);
+            var vakLector = await _context.VakLectoren.Include("Lector").Include("Vak").FirstOrDefaultAsync(m => m.VakLectorID == id);
+            vakLector.Lector.Gebruiker = _context.Gebruiker.Find(vakLector.Lector.GebruikerID);
             if (vakLector == null)
             {
                 return NotFound();
@@ -75,9 +75,9 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
             
-            var vakLector = await _context.VakLectoren.Include("Lector").Include("Vak").FirstOrDefaultAsync(m => m.VakLectorID == id);
-            var lector = await _context.Lectoren.Include("Gebruiker").FirstOrDefaultAsync(m => m.LectorID == id);
-            vakLector.Lector.Gebruiker = lector.Gebruiker;
+            var vakLector = await _context.VakLectoren.Include("Lector").Include("Vak").Include("Handboek").FirstOrDefaultAsync(m => m.VakLectorID == id);
+            vakLector.Lector.Gebruiker = _context.Gebruiker.Find(vakLector.Lector.GebruikerID);
+
             if (vakLector == null)
             {
                 return NotFound();
@@ -90,7 +90,7 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VakLectorID,LectorID,VakId,Vak,Lector")] VakLector vakLector)
+        public async Task<IActionResult> Edit(int id, [Bind("VakLectorID,LectorID,VakId,Vak,Lector,GebruikerID")] VakLector vakLector)
         {
             if (id != vakLector.VakLectorID)
             {

@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.Vak.VakNaam)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Lector.Gebruiker.Naam)
+                @Html.DisplayFor(modelItem => item.Lector.GebruikerID)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.VakLectorID">Edit</a> |
