@@ -25,7 +25,7 @@ namespace HogeschoolPXL.Controllers
         // GET: Inschrijving
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Inschrijvingen.ToListAsync());
+            return View(await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").ToListAsync());
         }
 
         // GET: Inschrijving/Details/5
@@ -36,8 +36,9 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
 
-            var inschrijving = await _context.Inschrijvingen
+            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar")
                 .FirstOrDefaultAsync(m => m.InschrijvingID == id);
+            inschrijving.Student.Gebruiker = _context.Gebruiker.Find(inschrijving.Student.GebruikerID);
             if (inschrijving == null)
             {
                 return NotFound();
@@ -50,6 +51,7 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public IActionResult Create()
         {
+            ViewData["VakLectoren"] = new SelectList(_context.VakLectoren);
             return View();
         }
 
@@ -59,7 +61,7 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Create([Bind("InschrijvingID,StudentID,VakLectorID,AcademieJaarID")] Inschrijving inschrijving)
+        public async Task<IActionResult> Create([Bind("InschrijvingID,StudentID,VakLectorID,AcademieJaarID,Student,AcademieJaar")] Inschrijving inschrijving)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +88,8 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
 
-            var inschrijving = await _context.Inschrijvingen.FindAsync(id);
+            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").FirstOrDefaultAsync(m => m.InschrijvingID == id);
+            inschrijving.Student.Gebruiker = _context.Gebruiker.Find(inschrijving.Student.GebruikerID);
             if (inschrijving == null)
             {
                 return NotFound();
@@ -100,7 +103,7 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Edit(int id, [Bind("InschrijvingID,StudentID,VakLectorID,AcademieJaarID")] Inschrijving inschrijving)
+        public async Task<IActionResult> Edit(int id, [Bind("InschrijvingID,StudentID,VakLectorID,AcademieJaarID,Student,AcademieJaarD")] Inschrijving inschrijving)
         {
             if (id != inschrijving.InschrijvingID)
             {

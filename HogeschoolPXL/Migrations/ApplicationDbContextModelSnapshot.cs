@@ -65,9 +65,6 @@ namespace HogeschoolPXL.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdentityUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Naam")
                         .HasColumnType("nvarchar(max)");
 
@@ -75,8 +72,6 @@ namespace HogeschoolPXL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GebruikerID");
-
-                    b.HasIndex("IdentityUserId");
 
                     b.ToTable("Gebruiker");
                 });
@@ -117,10 +112,16 @@ namespace HogeschoolPXL.Migrations
                     b.Property<int>("StudentID")
                         .HasColumnType("int");
 
-                    b.Property<int>("VakLectorID")
+                    b.Property<int?>("VakLectorID")
                         .HasColumnType("int");
 
                     b.HasKey("InschrijvingID");
+
+                    b.HasIndex("AcademieJaarID");
+
+                    b.HasIndex("StudentID");
+
+                    b.HasIndex("VakLectorID");
 
                     b.ToTable("Inschrijvingen");
                 });
@@ -155,6 +156,8 @@ namespace HogeschoolPXL.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("StudentID");
+
+                    b.HasIndex("GebruikerID");
 
                     b.ToTable("Studenten");
                 });
@@ -402,16 +405,43 @@ namespace HogeschoolPXL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("HogeschoolPXL.Models.Gebruiker", b =>
+            modelBuilder.Entity("HogeschoolPXL.Models.Inschrijving", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                    b.HasOne("HogeschoolPXL.Models.AcademieJaar", "AcademieJaar")
                         .WithMany()
-                        .HasForeignKey("IdentityUserId");
+                        .HasForeignKey("AcademieJaarID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("IdentityUser");
+                    b.HasOne("HogeschoolPXL.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HogeschoolPXL.Models.VakLector", "VakLector")
+                        .WithMany()
+                        .HasForeignKey("VakLectorID");
+
+                    b.Navigation("AcademieJaar");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("VakLector");
                 });
 
             modelBuilder.Entity("HogeschoolPXL.Models.Lector", b =>
+                {
+                    b.HasOne("HogeschoolPXL.Models.Gebruiker", "Gebruiker")
+                        .WithMany()
+                        .HasForeignKey("GebruikerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gebruiker");
+                });
+
+            modelBuilder.Entity("HogeschoolPXL.Models.Student", b =>
                 {
                     b.HasOne("HogeschoolPXL.Models.Gebruiker", "Gebruiker")
                         .WithMany()

@@ -59,38 +59,24 @@ namespace HogeschoolPXL.Data
         {
             if (!_context.Studenten.Any())
             {
-                Gebruiker g = new Gebruiker() { GebruikerID = 0, Naam = "Van Kimmenade", Voornaam = "Anton", Email = "toonvankimmenade@gmail.com" };
-                Gebruiker g2 = new Gebruiker() { Naam = "Palmaers", Voornaam = "Kristof", Email = "palmaerskristof@gmail.com" };
-                Student s = new Student() { StudentID = 0, GebruikerID = 0 };
-                _context.Gebruiker.Add(g);
-                _context.Gebruiker.Add(g2);
-                _context.Studenten.Add(s);
-                _context.SaveChanges();
-            }
-            if (!_context.Lectoren.Any())
-            {
-                Lector l = new Lector { GebruikerID = 1, LectorID = 0 };
-                _context.Lectoren.Add(l);
-                _context.SaveChanges();
-            }
-            if (!_context.Handboeken.Any())
-            {
-                Handboek h = new Handboek { Titel = "C# Web 1", UitgifteDatum = DateTime.Now, HandboekID = 0, };
-                _context.Handboeken.Add(h);
-                _context.SaveChanges();
-            }
-            if (!_context.Vakken.Any())
-            {
-                Vak v = new Vak { VakId = 0, VakNaam = "C# Web 1", HandboekID = 0, Studiepunten = 6 };
-                _context.Vakken.Add(v);
+                Gebruiker g = new Gebruiker() { Naam = "Van Kimmenade", Voornaam = "Anton", Email = "toonvankimmenade@gmail.com" };
+                Student s = new Student() { Gebruiker = g };
+                _context.Add(s);
                 _context.SaveChanges();
             }
             if (!_context.VakLectoren.Any())
             {
-                VakLector v = new VakLector { LectorID = 0, VakId = 0, VakLectorID = 0 };
+                Handboek ha = new Handboek { Titel = "C# Web 1", UitgifteDatum = DateTime.Now, HandboekID = 0, };
+                _context.Handboeken.Add(ha);
+                
+                Gebruiker ge = new Gebruiker() { Naam = "Palmaers", Voornaam = "Kristof", Email = "palmaerskristof@gmail.com" };
+                Lector le = new Lector { Gebruiker = ge };
+                Vak va = new Vak { VakId = 0, VakNaam = "C# Web 1", HandboekID = 0, Studiepunten = 6 };
+                
+                VakLector v = new VakLector { Lector = le, Vak = va };
                 _context.VakLectoren.Add(v);
                 _context.SaveChanges();
-            };
+            }
             if (!_context.AcademieJaren.Any())
             {
                 AcademieJaar a = new AcademieJaar { AcademieJaarID = 0, StartDatum = new DateTime(2021, 9, 20) };
@@ -99,8 +85,8 @@ namespace HogeschoolPXL.Data
             }
             if (!_context.Inschrijvingen.Any())
             {
-                Inschrijving i = new Inschrijving { AcademieJaarID = 0, InschrijvingID = 0, VakLectorID = 0, StudentID = 0 };
-                _context.Inschrijvingen.Add(i);
+                //Inschrijving i = new Inschrijving { AcademieJaarID = 0, InschrijvingID = 0, VakLectorID = 0, StudentID = 0 };
+                //_context.Inschrijvingen.Add(i);
             }
             //_context.SaveChanges();
         }
