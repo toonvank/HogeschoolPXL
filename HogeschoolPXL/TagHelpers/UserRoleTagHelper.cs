@@ -23,7 +23,14 @@ namespace HogeschoolPXL.TagHelpers
         {
             IList<string> roles = await _userManager.GetRolesAsync(User);
             string role = roles.FirstOrDefault();
-            output.Content.SetContent(role.Length == 0 ? "Geen rol" : role);
+            try
+            {
+                output.Content.SetContent(role);
+            }
+            catch (Exception)
+            {
+                output.Content.SetContent("Geen rol");
+            }
         }
     }
 }

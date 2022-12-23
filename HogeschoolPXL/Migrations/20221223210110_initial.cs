@@ -75,21 +75,6 @@ namespace HogeschoolPXL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Gebruiker",
-                columns: table => new
-                {
-                    GebruikerID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naam = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Voornaam = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Gebruiker", x => x.GebruikerID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Handboeken",
                 columns: table => new
                 {
@@ -220,6 +205,29 @@ namespace HogeschoolPXL.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Gebruiker",
+                columns: table => new
+                {
+                    GebruikerID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Naam = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Voornaam = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdentityUserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TempRole = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Gebruiker", x => x.GebruikerID);
+                    table.ForeignKey(
+                        name: "FK_Gebruiker_AspNetUsers_IdentityUserID",
+                        column: x => x.IdentityUserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -360,6 +368,11 @@ namespace HogeschoolPXL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Gebruiker_IdentityUserID",
+                table: "Gebruiker",
+                column: "IdentityUserID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Inschrijvingen_AcademieJaarID",
                 table: "Inschrijvingen",
                 column: "AcademieJaarID");
@@ -425,9 +438,6 @@ namespace HogeschoolPXL.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "AcademieJaren");
 
             migrationBuilder.DropTable(
@@ -444,6 +454,9 @@ namespace HogeschoolPXL.Migrations
 
             migrationBuilder.DropTable(
                 name: "Gebruiker");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

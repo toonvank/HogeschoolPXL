@@ -37,7 +37,7 @@
                 <th>AssignRoles</th>
             </tr>
         </thead>
-        <tr><th>ID</th><th>Name</th><th>Change Role</th></tr>
+        <tr><th>ID</th><th>Name</th><th>TempRole</th><th>Change Role</th></tr>
         @foreach (var user in Model.Users)
         {
             <form asp-action="ChangeUserRole">
@@ -45,6 +45,7 @@
                     <td>@user.Id</td>
                     <input asp-for="UserID"style="visibility:hidden;"value="@user.Id">
                     <td>@user.UserName</td>
+                    <td id="tempRole" temp-role="@user"></td>
                     <td style="display:none;" id="roleName" user-role="@user"></td>
                     <td><select id="roleSelect" asp-for="RoleId" class="form-control" asp-items="ViewBag.RoleId"></select></td>
                     @*<td><a id="btnUpdate" class="btn btn-primary"  asp-controller="Account" asp-action="ChangeUserRole">Update</a></td>*@

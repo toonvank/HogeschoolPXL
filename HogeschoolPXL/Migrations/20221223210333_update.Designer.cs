@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HogeschoolPXL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221222202955_initial")]
-    partial class initial
+    [Migration("20221223210333_update")]
+    partial class update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,13 +67,21 @@ namespace HogeschoolPXL.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("IdentityUserID")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Naam")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TempRole")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Voornaam")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("GebruikerID");
+
+                    b.HasIndex("IdentityUserID");
 
                     b.ToTable("Gebruiker");
                 });
@@ -405,6 +413,15 @@ namespace HogeschoolPXL.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("HogeschoolPXL.Models.Gebruiker", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserID");
+
+                    b.Navigation("IdentityUser");
                 });
 
             modelBuilder.Entity("HogeschoolPXL.Models.Inschrijving", b =>

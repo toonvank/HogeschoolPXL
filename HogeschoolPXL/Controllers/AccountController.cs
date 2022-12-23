@@ -1,10 +1,12 @@
 ﻿using HogeschoolPXL.Data;
 using HogeschoolPXL.Data.DefaultData;
+using HogeschoolPXL.Models;
 using HogeschoolPXL.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Plugins;
 using System;
 
@@ -60,24 +62,21 @@ namespace HogeschoolPXL.Controllers
             ViewData["RoleId"] = new SelectList(_context.Roles);
             if (ModelState.IsValid)
             {
-                if (registerViewModel.RoleId != null)
+                if (registerViewModel.TempRole != null)
                 {
                     var identityUser = new IdentityUser();
                     identityUser.Email = registerViewModel.Email;
                     identityUser.UserName = registerViewModel.Email;
                     var identityResult = await _userManager.CreateAsync(identityUser, registerViewModel.Password);
-                    // check if login is succeeded  
                     if (identityResult.Succeeded)
                     {
-                        var identityRole = await _roleManager.FindByNameAsync(registerViewModel.RoleId);
+                        //var identityRole = await _roleManager.FindByNameAsync(registerViewModel.TempRole);
+                        //var roleResult = await _userManager.AddToRoleAsync(identityUser, identityRole.Name);
 
-                        // add role asynchronus identityuser and roleid     
-                        var roleResult = await _userManager.AddToRoleAsync(identityUser, identityRole.Name);
-                        // return login if result succeeded
-                        if (roleResult.Succeeded)
-                        {
-                            return View("RegistrationCompleted");
-                        }
+                        Gebruiker g = new Gebruiker() { Email = registerViewModel.Email, TempRole = registerViewModel.TempRole, Naam = identityUser.UserName, Voornaam = identityUser.UserName, IdentityUserID = identityUser.Id, IdentityUser = identityUser};
+                        _context.Gebruiker.Add(g);
+                        _context.SaveChanges();
+                        return View("RegistrationCompleted");
                     }
                     foreach (var error in identityResult.Errors)
                     {
