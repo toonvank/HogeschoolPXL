@@ -1,8 +1,14 @@
-﻿@{
+﻿@model HogeschoolPXL.Models.ViewModels.HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<form asp-action="Index" method="post">
+    <div class="form-group">
+        <label asp-for="searchQuery" class="control-label"></label>
+        <input asp-for="searchQuery" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form>
