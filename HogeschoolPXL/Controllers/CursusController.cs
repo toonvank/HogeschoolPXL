@@ -26,7 +26,7 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.student + "," + Roles.admin)]
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Cursus.ToListAsync());
+              return View(await _context.Cursus.Include("Handboek").ToListAsync());
         }
 
         // GET: Cursus/Details/5
@@ -38,7 +38,7 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
 
-            var cursus = await _context.Cursus
+            var cursus = await _context.Cursus.Include("Handboek")
                 .FirstOrDefaultAsync(m => m.CursusId == id);
             if (cursus == null)
             {
@@ -52,6 +52,8 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public IActionResult Create()
         {
+
+            ViewData["Handboeken"] = new SelectList(_context.Handboeken);
             return View();
         }
 
@@ -61,8 +63,9 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Create([Bind("CursusId,CursusNaam")] Cursus cursus)
+        public async Task<IActionResult> Create([Bind("CursusId,CursusNaam,HandboekID,Handboek")] Cursus cursus)
         {
+            ViewData["Handboeken"] = new SelectList(_context.Handboeken);
             if (ModelState.IsValid)
             {
                 if (_context.Handboeken.Any())
@@ -102,8 +105,9 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Edit(int id, [Bind("CursusId,CursusNaam")] Cursus cursus)
+        public async Task<IActionResult> Edit(int id, [Bind("CursusId,CursusNaam,HandboekID,Handboek")] Cursus cursus)
         {
+            ViewData["Handboeken"] = new SelectList(_context.Handboeken);
             if (id != cursus.CursusId)
             {
                 return NotFound();

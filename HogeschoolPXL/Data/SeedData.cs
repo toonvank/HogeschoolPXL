@@ -57,38 +57,37 @@ namespace HogeschoolPXL.Data
         }
         public static void VoegStandaardDataToe()
         {
-            if (!_context.Studenten.Any())
+            if (!_context.Inschrijvingen.Any())
             {
-                Gebruiker g = new Gebruiker() { Naam = "Van Kimmenade", Voornaam = "Anton", Email = "toonvankimmenade@gmail.com" };
-                Student s = new Student() { Gebruiker = g };
-                _context.Add(s);
-                _context.SaveChanges();
-            }
-            if (!_context.VakLectoren.Any())
-            {
-                Handboek ha = new Handboek { Titel = "C# Web 1", UitgifteDatum = DateTime.Now, HandboekID = 0, };
+                Handboek ha = new Handboek { Titel = "C# Web 1", UitgifteDatum = DateTime.Now, Afbeelding = "https://static.packt-cdn.com/products/9781800567184/cover/smaller" };
                 _context.Handboeken.Add(ha);
-                
+                _context.SaveChanges();
+
                 Gebruiker ge = new Gebruiker() { Naam = "Palmaers", Voornaam = "Kristof", Email = "palmaerskristof@gmail.com" };
                 Lector le = new Lector { Gebruiker = ge };
                 Vak va = new Vak { VakId = 0, VakNaam = "C# Web 1", HandboekID = 0, Studiepunten = 6 };
-                
+
                 VakLector v = new VakLector { Lector = le, Vak = va };
                 _context.VakLectoren.Add(v);
                 _context.SaveChanges();
-            }
-            if (!_context.AcademieJaren.Any())
-            {
-                AcademieJaar a = new AcademieJaar { AcademieJaarID = 0, StartDatum = new DateTime(2021, 9, 20) };
+
+                Cursus c = new Cursus { CursusNaam = "Graduaat Programmeren", Handboek = ha, CursusId = 0, HandboekID = 0 };
+                _context.Cursus.Add(c);
+                _context.SaveChanges();
+
+                Gebruiker g = new Gebruiker() { Naam = "Van Kimmenade", Voornaam = "Anton", Email = "toonvankimmenade@gmail.com" };
+                Student s = new Student() { Gebruiker = g, Handboek = _context.Handboeken.First(),  Cursus = c, CursusID = 0, GebruikerID = 0, StudentID = 0};
+                _context.Add(s);
+                _context.SaveChanges();
+
+                AcademieJaar a = new AcademieJaar { StartDatum = new DateTime(2021, 9, 20) };
                 _context.AcademieJaren.Add(a);
                 _context.SaveChanges();
+
+                Inschrijving i = new Inschrijving { AcademieJaarID = 0, InschrijvingID = 0, VakLector = v, StudentID = 0, AcademieJaar = a, Student = s };
+                _context.Inschrijvingen.Add(i);
+                _context.SaveChanges();
             }
-            if (!_context.Inschrijvingen.Any())
-            {
-                //Inschrijving i = new Inschrijving { AcademieJaarID = 0, InschrijvingID = 0, VakLectorID = 0, StudentID = 0 };
-                //_context.Inschrijvingen.Add(i);
-            }
-            //_context.SaveChanges();
         }
     }
 }

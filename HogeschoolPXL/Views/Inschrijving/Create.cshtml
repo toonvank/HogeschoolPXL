@@ -33,6 +33,11 @@
                 <span asp-validation-for="VakLector.VakLectorID" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Student.Cursus" class="control-label"></label>
+                <select asp-for="Student.Cursus" class="form-control" asp-items="ViewBag.Cursussen"></select>
+                <span asp-validation-for="Student.Cursus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="AcademieJaar.StartDatum" class="control-label"></label>
                 <input asp-for="AcademieJaar.StartDatum" class="form-control" />
                 <span asp-validation-for="AcademieJaar.StartDatum" class="text-danger"></span>

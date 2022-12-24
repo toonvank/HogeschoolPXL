@@ -62,19 +62,6 @@ namespace HogeschoolPXL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cursus",
-                columns: table => new
-                {
-                    CursusId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CursusNaam = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Cursus", x => x.CursusId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Handboeken",
                 columns: table => new
                 {
@@ -219,7 +206,7 @@ namespace HogeschoolPXL.Migrations
                     Naam = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Voornaam = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdentityUserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    IdentityUserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     TempRole = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -229,7 +216,26 @@ namespace HogeschoolPXL.Migrations
                         name: "FK_Gebruiker_AspNetUsers_IdentityUserID",
                         column: x => x.IdentityUserID,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Cursus",
+                columns: table => new
+                {
+                    CursusId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CursusNaam = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HandboekID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cursus", x => x.CursusId);
+                    table.ForeignKey(
+                        name: "FK_Cursus_Handboeken_HandboekID",
+                        column: x => x.HandboekID,
+                        principalTable: "Handboeken",
+                        principalColumn: "HandboekID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -258,17 +264,30 @@ namespace HogeschoolPXL.Migrations
                 {
                     StudentID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GebruikerID = table.Column<int>(type: "int", nullable: false)
+                    GebruikerID = table.Column<int>(type: "int", nullable: false),
+                    CursusID = table.Column<int>(type: "int", nullable: false),
+                    HandboekID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Studenten", x => x.StudentID);
+                    table.ForeignKey(
+                        name: "FK_Studenten_Cursus_CursusID",
+                        column: x => x.CursusID,
+                        principalTable: "Cursus",
+                        principalColumn: "CursusId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Studenten_Gebruiker_GebruikerID",
                         column: x => x.GebruikerID,
                         principalTable: "Gebruiker",
                         principalColumn: "GebruikerID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Studenten_Handboeken_HandboekID",
+                        column: x => x.HandboekID,
+                        principalTable: "Handboeken",
+                        principalColumn: "HandboekID");
                 });
 
             migrationBuilder.CreateTable(
@@ -368,6 +387,11 @@ namespace HogeschoolPXL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Cursus_HandboekID",
+                table: "Cursus",
+                column: "HandboekID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Gebruiker_IdentityUserID",
                 table: "Gebruiker",
                 column: "IdentityUserID");
@@ -393,9 +417,19 @@ namespace HogeschoolPXL.Migrations
                 column: "GebruikerID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Studenten_CursusID",
+                table: "Studenten",
+                column: "CursusID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Studenten_GebruikerID",
                 table: "Studenten",
                 column: "GebruikerID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Studenten_HandboekID",
+                table: "Studenten",
+                column: "HandboekID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VakLectoren_LectorID",
@@ -426,12 +460,6 @@ namespace HogeschoolPXL.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Cursus");
-
-            migrationBuilder.DropTable(
-                name: "Handboeken");
-
-            migrationBuilder.DropTable(
                 name: "Inschrijvingen");
 
             migrationBuilder.DropTable(
@@ -447,10 +475,16 @@ namespace HogeschoolPXL.Migrations
                 name: "VakLectoren");
 
             migrationBuilder.DropTable(
+                name: "Cursus");
+
+            migrationBuilder.DropTable(
                 name: "Lectoren");
 
             migrationBuilder.DropTable(
                 name: "Vakken");
+
+            migrationBuilder.DropTable(
+                name: "Handboeken");
 
             migrationBuilder.DropTable(
                 name: "Gebruiker");

@@ -25,7 +25,7 @@ namespace HogeschoolPXL.Controllers
         // GET: Inschrijving
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").ToListAsync());
+            return View(await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").Include("Student.Cursus").Include("Student.Handboek").ToListAsync());
         }
 
         // GET: Inschrijving/Details/5
@@ -36,7 +36,7 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
 
-            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar")
+            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Cursus").Include("Student.Handboek")
                 .FirstOrDefaultAsync(m => m.InschrijvingID == id);
             inschrijving.Student.Gebruiker = _context.Gebruiker.Find(inschrijving.Student.GebruikerID);
             if (inschrijving == null)
@@ -52,6 +52,7 @@ namespace HogeschoolPXL.Controllers
         public IActionResult Create()
         {
             ViewData["VakLectoren"] = new SelectList(_context.VakLectoren);
+            ViewData["Cursussen"] = new SelectList(_context.Cursus);
             return View();
         }
 
@@ -61,7 +62,7 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Create([Bind("InschrijvingID,StudentID,VakLectorID,AcademieJaarID,Student,AcademieJaar")] Inschrijving inschrijving)
+        public async Task<IActionResult> Create([Bind("InschrijvingID,StudentID,VakLectorID,AcademieJaarID,Student,AcademieJaar,Cursus, CursusID,Handboek,HandboekID")] Inschrijving inschrijving)
         {
             if (ModelState.IsValid)
             {
@@ -83,12 +84,14 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Edit(int? id)
         {
+
+            ViewData["Cursussen"] = new SelectList(_context.Cursus);
             if (id == null || _context.Inschrijvingen == null)
             {
                 return NotFound();
             }
 
-            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").FirstOrDefaultAsync(m => m.InschrijvingID == id);
+            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Cursus").Include("Student.Handboek").FirstOrDefaultAsync(m => m.InschrijvingID == id);
             inschrijving.Student.Gebruiker = _context.Gebruiker.Find(inschrijving.Student.GebruikerID);
             if (inschrijving == null)
             {
@@ -103,7 +106,7 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Edit(int id, [Bind("InschrijvingID,StudentID,VakLectorID,AcademieJaarID,Student,AcademieJaarD")] Inschrijving inschrijving)
+        public async Task<IActionResult> Edit(int id, [Bind("InschrijvingID,StudentID,VakLectorID,AcademieJaarID,Student,AcademieJaar,Cursus, CursusID,Handboek,HandboekID")] Inschrijving inschrijving)
         {
             if (id != inschrijving.InschrijvingID)
             {

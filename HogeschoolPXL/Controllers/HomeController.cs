@@ -37,7 +37,7 @@ namespace HogeschoolPXL.Controllers
             {
                 if (item.Gebruiker.Naam.ToLower().Contains(homeViewModel.searchQuery.ToLower()))
                 {
-                    return RedirectToAction("Details", "Student", new { id = item.GebruikerID });
+                    return RedirectToAction("Details", "Gebruiker", new { id = item.GebruikerID });
                 }
                 else
                 {

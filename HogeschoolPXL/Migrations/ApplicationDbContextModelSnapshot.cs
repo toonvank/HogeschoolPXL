@@ -49,7 +49,12 @@ namespace HogeschoolPXL.Migrations
                     b.Property<string>("CursusNaam")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("HandboekID")
+                        .HasColumnType("int");
+
                     b.HasKey("CursusId");
+
+                    b.HasIndex("HandboekID");
 
                     b.ToTable("Cursus");
                 });
@@ -160,12 +165,22 @@ namespace HogeschoolPXL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentID"), 1L, 1);
 
+                    b.Property<int>("CursusID")
+                        .HasColumnType("int");
+
                     b.Property<int>("GebruikerID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("HandboekID")
                         .HasColumnType("int");
 
                     b.HasKey("StudentID");
 
+                    b.HasIndex("CursusID");
+
                     b.HasIndex("GebruikerID");
+
+                    b.HasIndex("HandboekID");
 
                     b.ToTable("Studenten");
                 });
@@ -413,6 +428,17 @@ namespace HogeschoolPXL.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HogeschoolPXL.Models.Cursus", b =>
+                {
+                    b.HasOne("HogeschoolPXL.Models.Handboek", "Handboek")
+                        .WithMany()
+                        .HasForeignKey("HandboekID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Handboek");
+                });
+
             modelBuilder.Entity("HogeschoolPXL.Models.Gebruiker", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
@@ -460,13 +486,27 @@ namespace HogeschoolPXL.Migrations
 
             modelBuilder.Entity("HogeschoolPXL.Models.Student", b =>
                 {
+                    b.HasOne("HogeschoolPXL.Models.Cursus", "Cursus")
+                        .WithMany()
+                        .HasForeignKey("CursusID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HogeschoolPXL.Models.Gebruiker", "Gebruiker")
                         .WithMany()
                         .HasForeignKey("GebruikerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("HogeschoolPXL.Models.Handboek", "Handboek")
+                        .WithMany()
+                        .HasForeignKey("HandboekID");
+
+                    b.Navigation("Cursus");
+
                     b.Navigation("Gebruiker");
+
+                    b.Navigation("Handboek");
                 });
 
             modelBuilder.Entity("HogeschoolPXL.Models.VakLector", b =>

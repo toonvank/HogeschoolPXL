@@ -29,6 +29,18 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.AcademieJaarID)
         </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Student.Cursus)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Student.Cursus)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AcademieJaar.StartDatum)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AcademieJaar.StartDatum)
+        </dd>
     </dl>
     
     <form asp-action="Delete">
