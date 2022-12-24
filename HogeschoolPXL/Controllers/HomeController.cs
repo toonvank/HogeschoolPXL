@@ -35,9 +35,13 @@ namespace HogeschoolPXL.Controllers
             // find student by name linq query
             foreach (var item in _context.Studenten.Include("Gebruiker"))
             {
-                if (item.Gebruiker.Naam.Contains(homeViewModel.searchQuery))
+                if (item.Gebruiker.Naam.ToLower().Contains(homeViewModel.searchQuery.ToLower()))
                 {
-                    // something with partial view that show the student
+                    return RedirectToAction("Details", "Student", new { id = item.GebruikerID });
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Not found");
                 }
             }
             return View();

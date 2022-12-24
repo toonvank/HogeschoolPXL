@@ -76,7 +76,14 @@ namespace HogeschoolPXL.Controllers
                         Gebruiker g = new Gebruiker() { Email = registerViewModel.Email, TempRole = registerViewModel.TempRole, Naam = identityUser.UserName, Voornaam = identityUser.UserName, IdentityUserID = identityUser.Id, IdentityUser = identityUser};
                         _context.Gebruiker.Add(g);
                         _context.SaveChanges();
-                        return View("RegistrationCompleted");
+
+                        var signInResult = await _signInManager.PasswordSignInAsync(identityUser.UserName, registerViewModel.Password, false, false);
+
+                        if (signInResult.Succeeded)
+                        {
+                            return RedirectToAction("Index", "Home");
+                        }
+                        //return View("RegistrationCompleted");
                     }
                     foreach (var error in identityResult.Errors)
                     {
