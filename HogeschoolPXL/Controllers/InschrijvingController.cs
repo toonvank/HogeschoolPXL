@@ -9,6 +9,7 @@ using HogeschoolPXL.Data;
 using HogeschoolPXL.Models;
 using Microsoft.AspNetCore.Authorization;
 using HogeschoolPXL.Data.DefaultData;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HogeschoolPXL.Controllers
 {
@@ -36,7 +37,7 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
 
-            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Cursus").Include("Student.Handboek")
+            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").Include("Student.Cursus").Include("Student.Handboek")
                 .FirstOrDefaultAsync(m => m.InschrijvingID == id);
             inschrijving.Student.Gebruiker = _context.Gebruiker.Find(inschrijving.Student.GebruikerID);
             if (inschrijving == null)
@@ -51,8 +52,8 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public IActionResult Create()
         {
-            ViewData["VakLectoren"] = new SelectList(_context.VakLectoren);
-            ViewData["Cursussen"] = new SelectList(_context.Cursus);
+            ViewData["VakLectoren"] = new SelectList(_context.VakLectoren.Include("Lector").Include("Lector.Gebruiker").Select(l => l.Lector.Gebruiker.Naam + " " + l.Lector.Gebruiker.Voornaam));
+            ViewData["Cursussen"] = new SelectList(_context.Cursus.Select(l => l.CursusNaam));
             return View();
         }
 
@@ -62,12 +63,13 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Create([Bind("InschrijvingID,StudentID,VakLectorID,AcademieJaarID,Student,AcademieJaar,Cursus, CursusID,Handboek,HandboekID")] Inschrijving inschrijving)
+        public async Task<IActionResult> Create([Bind("InschrijvingID,StudentID,VakLectorID,AcademieJaarID,VakLector,Student,AcademieJaar,Cursus,CursusID")] Inschrijving inschrijving)
         {
             if (ModelState.IsValid)
             {
                 if (_context.Studenten.Any())
                 {
+                    inschrijving.Student.Handboek = _context.Handboeken.FirstOrDefault();
                     _context.Add(inschrijving);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

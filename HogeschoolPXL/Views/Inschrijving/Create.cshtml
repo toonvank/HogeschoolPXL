@@ -28,14 +28,14 @@
                 <span asp-validation-for="Student.Gebruiker.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="VakLector.VakLectorID" class="control-label"></label>
-                <select asp-for="VakLector.VakLectorID" class="form-control" asp-items="ViewBag.VakLectoren"></select>
-                <span asp-validation-for="VakLector.VakLectorID" class="text-danger"></span>
+                <label asp-for="VakLector.Lector.Gebruiker.Naam" class="control-label"></label>
+                <select asp-for="VakLector.Lector.Gebruiker.Naam" class="form-control" asp-items="ViewBag.VakLectoren"></select>
+                <span asp-validation-for="VakLector.Lector.Gebruiker.Naam" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.Cursus" class="control-label"></label>
-                <select asp-for="Student.Cursus" class="form-control" asp-items="ViewBag.Cursussen"></select>
-                <span asp-validation-for="Student.Cursus" class="text-danger"></span>
+                <label asp-for="Student.Cursus.CursusNaam" class="control-label"></label>
+                <select asp-for="Student.Cursus.CursusNaam" class="form-control" asp-items="ViewBag.Cursussen"></select>
+                <span asp-validation-for="Student.Cursus.CursusNaam" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="AcademieJaar.StartDatum" class="control-label"></label>

@@ -52,8 +52,7 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public IActionResult Create()
         {
-
-            ViewData["Handboeken"] = new SelectList(_context.Handboeken);
+            ViewData["Handboeken"] = new SelectList(_context.Cursus.Include("Handboek").Select(l => l.Handboek.Titel));
             return View();
         }
 

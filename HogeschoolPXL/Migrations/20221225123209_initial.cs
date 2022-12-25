@@ -226,7 +226,7 @@ namespace HogeschoolPXL.Migrations
                     CursusId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CursusNaam = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HandboekID = table.Column<int>(type: "int", nullable: false)
+                    HandboekID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -235,8 +235,7 @@ namespace HogeschoolPXL.Migrations
                         name: "FK_Cursus_Handboeken_HandboekID",
                         column: x => x.HandboekID,
                         principalTable: "Handboeken",
-                        principalColumn: "HandboekID",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "HandboekID");
                 });
 
             migrationBuilder.CreateTable(

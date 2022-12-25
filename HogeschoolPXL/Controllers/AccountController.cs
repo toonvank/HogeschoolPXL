@@ -104,7 +104,7 @@ namespace HogeschoolPXL.Controllers
         public async Task<IActionResult> LogoutAsync()
         {
             await _signInManager.SignOutAsync();
-            return View("Login");
+            return RedirectToAction("Login", "Account");
         }
         #endregion
         #region identity

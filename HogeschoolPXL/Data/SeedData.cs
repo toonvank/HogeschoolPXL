@@ -71,7 +71,7 @@ namespace HogeschoolPXL.Data
                 _context.VakLectoren.Add(v);
                 _context.SaveChanges();
 
-                Cursus c = new Cursus { CursusNaam = "Graduaat Programmeren", Handboek = ha, CursusId = 0, HandboekID = 0 };
+                Cursus c = new Cursus { CursusNaam = "Graduaat Programmeren", Handboek = ha, CursusId = 0};
                 _context.Cursus.Add(c);
                 _context.SaveChanges();
 

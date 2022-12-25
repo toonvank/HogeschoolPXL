@@ -11,24 +11,6 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StudentID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StudentID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.VakLector.VakLectorID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.VakLector.VakLectorID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AcademieJaarID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AcademieJaarID)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Student.Gebruiker.Naam)
         </dt>
         <dd class = "col-sm-10">
@@ -47,10 +29,16 @@
             @Html.DisplayFor(model => model.Student.Gebruiker.Email)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Student.Cursus)
+            @Html.DisplayNameFor(model => model.Student.Cursus.CursusNaam)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Student.Cursus)
+            @Html.DisplayFor(model => model.Student.Cursus.CursusNaam)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Student.Handboek.Titel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Student.Handboek.Titel)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.AcademieJaar.StartDatum)
