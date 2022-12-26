@@ -24,7 +24,7 @@ namespace HogeschoolPXL.Controllers
         // GET: VakLector
         public async Task<IActionResult> Index()
         {
-              return View(_context.VakLectoren.Include("Lector").Include("Vak").Include("Lector.Gebruiker").ToList());
+              return View(_context.VakLectoren.Include("Lector").Include("Vak").Include("Lector.Gebruiker").Include("Vak.Handboek").ToList());
         }
 
         // GET: VakLector/Details/5
@@ -59,12 +59,13 @@ namespace HogeschoolPXL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("VakLectorID,LectorID,VakId,Vak,Lector")] VakLector vakLector)
         {
-            if (ModelState.IsValid)
-            {
+            ViewData["Handboeken"] = new SelectList(_context.Handboeken.Select(l => l.Titel));
+            //if (ModelState.IsValid)
+            //{
                 _context.Add(vakLector);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
-            }
+            //}
             return View(vakLector);
         }
 

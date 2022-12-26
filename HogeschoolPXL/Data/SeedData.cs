@@ -63,7 +63,7 @@ namespace HogeschoolPXL.Data
                 _context.Handboeken.Add(ha);
                 _context.SaveChanges();
 
-                Gebruiker ge = new Gebruiker() { Naam = "Palmaers", Voornaam = "Kristof", Email = "palmaerskristof@gmail.com" };
+                Gebruiker ge = new Gebruiker() { Naam = "Palmaers", Voornaam = "Kristof", Email = "palmaerskristof@gmail.com", TempRole= "Assigned" };
                 Lector le = new Lector { Gebruiker = ge };
                 Vak va = new Vak { VakNaam = "C# Web 1", Handboek = ha, Studiepunten = 6 };
 
@@ -75,7 +75,7 @@ namespace HogeschoolPXL.Data
                 _context.Cursus.Add(c);
                 _context.SaveChanges();
 
-                Gebruiker g = new Gebruiker() { Naam = "Van Kimmenade", Voornaam = "Anton", Email = "toonvankimmenade@gmail.com" };
+                Gebruiker g = new Gebruiker() { Naam = "Van Kimmenade", Voornaam = "Anton", Email = "toonvankimmenade@gmail.com", TempRole = "Assigned" };
                 Student s = new Student() { Gebruiker = g,  Cursus = c};
                 _context.Add(s);
                 _context.SaveChanges();

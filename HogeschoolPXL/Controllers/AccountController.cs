@@ -142,6 +142,18 @@ namespace HogeschoolPXL.Controllers
             var roles = await _userManager.GetRolesAsync(identityUser);
             await _userManager.RemoveFromRolesAsync(identityUser, roles);
             await _userManager.AddToRoleAsync(identityUser, identityViewModel.RoleId);
+
+            //indien een rol aan gebruiker toegewezen is veranderd status naar assigned
+            foreach (var g in _context.Gebruiker.Include("IdentityUser"))
+            {
+                var idUser = await _userManager.FindByEmailAsync(g.Email);
+                g.IdentityUser = idUser;
+                if (g.IdentityUserID == identityUser.Id)
+                {
+                    g.TempRole = "Assigned";
+                }
+            }
+            _context.SaveChanges();
             return RedirectToAction("Identity");
         }
     }
