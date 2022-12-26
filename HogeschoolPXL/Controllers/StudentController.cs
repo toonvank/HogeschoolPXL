@@ -25,7 +25,7 @@ namespace HogeschoolPXL.Controllers
         // GET: Student
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Studenten.Include("Gebruiker").ToListAsync());
+              return View(await _context.Studenten.Include("Gebruiker").Include("Cursus").Include("Cursus.Vak").Include("Cursus.Vak.Handboek").ToListAsync());
         }
 
         // GET: Student/Details/5
@@ -36,7 +36,7 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Studenten
+            var student = await _context.Studenten.Include("Gebruiker").Include("Cursus").Include("Cursus.Vak.Handboek").Include("Cursus.Vak")
                 .FirstOrDefaultAsync(m => m.StudentID == id);
             if (student == null)
             {
@@ -59,7 +59,7 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Create([Bind("StudentID,GebruikerID")] Student student)
+        public async Task<IActionResult> Create([Bind("StudentID,GebruikerID,CursusID,HandboekID, Gebruiker, Cursus,Handboek,Student")] Student student)
         {
             if (ModelState.IsValid)
             {
@@ -78,8 +78,8 @@ namespace HogeschoolPXL.Controllers
             {
                 return NotFound();
             }
-
-            var student = await _context.Studenten.FindAsync(id);
+            
+            var student = await _context.Studenten.Include("Gebruiker").Include("Cursus").Include("Handboek").FirstOrDefaultAsync(m => m.StudentID == id);
             if (student == null)
             {
                 return NotFound();
@@ -93,7 +93,7 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Edit(int id, [Bind("StudentID,GebruikerID")] Student student)
+        public async Task<IActionResult> Edit(int id, [Bind("StudentID,GebruikerID,CursusID,HandboekID, Gebruiker, Cursus,Handboek,Student")] Student student)
         {
             if (id != student.StudentID)
             {

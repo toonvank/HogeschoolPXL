@@ -24,7 +24,7 @@ namespace HogeschoolPXL.Controllers
         // GET: Vak
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Vakken.ToListAsync());
+              return View(await _context.Vakken.Include("Handboek").ToListAsync());
         }
 
         // GET: Vak/Details/5
@@ -35,7 +35,7 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
 
-            var vak = await _context.Vakken
+            var vak = await _context.Vakken.Include("Handboek")
                 .FirstOrDefaultAsync(m => m.VakId == id);
             if (vak == null)
             {
@@ -48,6 +48,7 @@ namespace HogeschoolPXL.Controllers
         // GET: Vak/Create
         public IActionResult Create()
         {
+            ViewData["Handboek"] = new SelectList(_context.Handboeken.Select(l => l.Titel));
             return View();
         }
 
@@ -56,8 +57,9 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VakId,VakNaam,Studiepunten,HandboekID")] Vak vak)
+        public async Task<IActionResult> Create([Bind("VakId,VakNaam,Studiepunten,HandboekID,Handboek")] Vak vak)
         {
+            ViewData["Handboek"] = new SelectList(_context.Handboeken.Select(l => l.Titel));
             if (ModelState.IsValid)
             {
                 _context.Add(vak);
@@ -70,6 +72,7 @@ namespace HogeschoolPXL.Controllers
         // GET: Vak/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["Handboek"] = new SelectList(_context.Handboeken.Select(l => l.Titel));
             if (id == null || _context.Vakken == null)
             {
                 return NotFound();
@@ -88,8 +91,9 @@ namespace HogeschoolPXL.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("VakId,VakNaam,Studiepunten,HandboekID")] Vak vak)
+        public async Task<IActionResult> Edit(int id, [Bind("VakId,VakNaam,Studiepunten,HandboekID, Handboek")] Vak vak)
         {
+            ViewData["Handboek"] = new SelectList(_context.Handboeken.Select(l => l.Titel));
             if (id != vak.VakId)
             {
                 return NotFound();

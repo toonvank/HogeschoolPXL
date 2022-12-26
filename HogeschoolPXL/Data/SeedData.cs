@@ -59,24 +59,24 @@ namespace HogeschoolPXL.Data
         {
             if (!_context.Inschrijvingen.Any())
             {
-                Handboek ha = new Handboek { Titel = "C# Web 1", UitgifteDatum = DateTime.Now, Afbeelding = "https://static.packt-cdn.com/products/9781800567184/cover/smaller" };
+                Handboek ha = new Handboek { Titel = "C# Web 1", UitgifteDatum = new DateTime(2019, 05, 09, 09, 15, 00), Afbeelding = "https://static.packt-cdn.com/products/9781800567184/cover/smaller"};
                 _context.Handboeken.Add(ha);
                 _context.SaveChanges();
 
                 Gebruiker ge = new Gebruiker() { Naam = "Palmaers", Voornaam = "Kristof", Email = "palmaerskristof@gmail.com" };
                 Lector le = new Lector { Gebruiker = ge };
-                Vak va = new Vak { VakId = 0, VakNaam = "C# Web 1", HandboekID = 0, Studiepunten = 6 };
+                Vak va = new Vak { VakNaam = "C# Web 1", Handboek = ha, Studiepunten = 6 };
 
                 VakLector v = new VakLector { Lector = le, Vak = va };
                 _context.VakLectoren.Add(v);
                 _context.SaveChanges();
 
-                Cursus c = new Cursus { CursusNaam = "Graduaat Programmeren", Handboek = ha, CursusId = 0};
+                Cursus c = new Cursus { CursusNaam = "Graduaat Programmeren", Vak = va};
                 _context.Cursus.Add(c);
                 _context.SaveChanges();
 
                 Gebruiker g = new Gebruiker() { Naam = "Van Kimmenade", Voornaam = "Anton", Email = "toonvankimmenade@gmail.com" };
-                Student s = new Student() { Gebruiker = g, Handboek = _context.Handboeken.First(),  Cursus = c, CursusID = 0, GebruikerID = 0, StudentID = 0};
+                Student s = new Student() { Gebruiker = g,  Cursus = c};
                 _context.Add(s);
                 _context.SaveChanges();
 
@@ -84,7 +84,7 @@ namespace HogeschoolPXL.Data
                 _context.AcademieJaren.Add(a);
                 _context.SaveChanges();
 
-                Inschrijving i = new Inschrijving { AcademieJaarID = 0, InschrijvingID = 0, VakLector = v, StudentID = 0, AcademieJaar = a, Student = s };
+                Inschrijving i = new Inschrijving { VakLector = v, AcademieJaar = a, Student = s };
                 _context.Inschrijvingen.Add(i);
                 _context.SaveChanges();
             }

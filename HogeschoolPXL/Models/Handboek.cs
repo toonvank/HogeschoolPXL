@@ -11,7 +11,7 @@ namespace HogeschoolPXL.Models
         public int HandboekID { get; set; }
         public string? Titel { get; set; }
         [ValidateDateRange("1/1/1980", "1/1/2022")]
-        public DateTime UitgifteDatum { get; set; }
+        public DateTime? UitgifteDatum { get; set; }
         public string? Afbeelding { get; set; }
     }
 }

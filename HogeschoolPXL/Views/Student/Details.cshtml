@@ -10,15 +10,54 @@
     <h4>Student</h4>
     <hr />
     <dl class="row">
+        <dt><h4>Gebruiker</h4></dt>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.GebruikerID)
+            @Html.DisplayNameFor(model => model.Gebruiker.Email)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.GebruikerID)
+            @Html.DisplayFor(model => model.Gebruiker.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gebruiker.Voornaam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Gebruiker.Voornaam)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Gebruiker.Naam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Gebruiker.Naam)
+        </dd>
+         <dt><h4>Cursus</h4></dt>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cursus.CursusNaam)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cursus.CursusNaam)
+        </dd>
+         <dt><h4>Handboek</h4></dt>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cursus.Vak.Handboek.Titel)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cursus.Vak.Handboek.Titel)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cursus.Vak.Handboek.UitgifteDatum)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cursus.Vak.Handboek.UitgifteDatum)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cursus.Vak.Handboek.Afbeelding)
+        </dt>
+        <dd class = "col-sm-10">
+            <img style="height: 200px;width:auto;" src="@Html.DisplayFor(model => model.Cursus.Vak.Handboek.Afbeelding)"</img>
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.StudentID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Back to Home</a>
 </div>

@@ -10,6 +10,5 @@ namespace HogeschoolPXL.Models
         public int CursusID { get; set; }
         public Gebruiker? Gebruiker { get; set; }
         public Cursus? Cursus { get; set; }
-        public Handboek? Handboek { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace HogeschoolPXL.Controllers
         // GET: VakLector
         public async Task<IActionResult> Index()
         {
-              return View(_context.VakLectoren.Include("Lector").Include("Vak").ToList());
+              return View(_context.VakLectoren.Include("Lector").Include("Vak").Include("Lector.Gebruiker").ToList());
         }
 
         // GET: VakLector/Details/5
@@ -48,6 +48,7 @@ namespace HogeschoolPXL.Controllers
         // GET: VakLector/Create
         public IActionResult Create()
         {
+            ViewData["Handboeken"] = new SelectList(_context.Handboeken.Select(l => l.Titel));
             return View();
         }
 
@@ -70,13 +71,15 @@ namespace HogeschoolPXL.Controllers
         // GET: VakLector/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["Handboeken"] = new SelectList(_context.Handboeken.Select(l => l.Titel));
             if (id == null || _context.VakLectoren == null)
             {
                 return NotFound();
             }
             
-            var vakLector = await _context.VakLectoren.Include("Lector").Include("Vak").Include("Handboek").FirstOrDefaultAsync(m => m.VakLectorID == id);
+            var vakLector = await _context.VakLectoren.Include("Lector").Include("Vak").Include("Lector.Gebruiker").Include("Vak.Handboek").FirstOrDefaultAsync(m => m.VakLectorID == id);
             vakLector.Lector.Gebruiker = _context.Gebruiker.Find(vakLector.Lector.GebruikerID);
+            vakLector.Vak.Handboek = _context.Handboeken.FirstOrDefault(h => h.Titel == vakLector.Vak.Handboek.Titel);
 
             if (vakLector == null)
             {
@@ -92,15 +95,19 @@ namespace HogeschoolPXL.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("VakLectorID,LectorID,VakId,Vak,Lector,GebruikerID")] VakLector vakLector)
         {
+            //ViewData["Handboeken"] = new SelectList(_context.Handboeken.Select(l => l.Titel));
             if (id != vakLector.VakLectorID)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
-            {
+
+            //if (ModelState.IsValid)
+            //{
                 try
                 {
+                    vakLector.Lector.Gebruiker = _context.Gebruiker.Find(vakLector.Lector.GebruikerID);
+                    vakLector.Vak.Handboek = _context.Handboeken.FirstOrDefault(h => h.Titel == vakLector.Vak.Handboek.Titel);
                     _context.Update(vakLector);
                     await _context.SaveChangesAsync();
                 }
@@ -116,8 +123,9 @@ namespace HogeschoolPXL.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            return View(vakLector);
+            //}
+            //return View(vakLector);
+            // In comment door validation error met handboek uitgifte datum waar geen oplossing op gevonden is
         }
 
         // GET: VakLector/Delete/5
@@ -150,7 +158,15 @@ namespace HogeschoolPXL.Controllers
             var vakLector = await _context.VakLectoren.FindAsync(id);
             if (vakLector != null)
             {
+                // find vaklector in inschrijving and set to null
+                var inschrijvingen = _context.Inschrijvingen.Where(i => i.VakLector.VakLectorID == vakLector.VakLectorID);
+                foreach (var inschrijving in inschrijvingen)
+                {
+                    inschrijving.VakLector = null;
+                    _context.Update(inschrijving);
+                }
                 _context.VakLectoren.Remove(vakLector);
+
             }
             
             await _context.SaveChangesAsync();

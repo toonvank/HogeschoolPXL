@@ -26,7 +26,7 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.student + "," + Roles.admin)]
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Cursus.Include("Handboek").ToListAsync());
+              return View(await _context.Cursus.Include("Vak").Include("Vak.Handboek").ToListAsync());
         }
 
         // GET: Cursus/Details/5
@@ -38,7 +38,7 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
 
-            var cursus = await _context.Cursus.Include("Handboek")
+            var cursus = await _context.Cursus.Include("Vak").Include("Vak.Handboek")
                 .FirstOrDefaultAsync(m => m.CursusId == id);
             if (cursus == null)
             {
@@ -52,7 +52,7 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public IActionResult Create()
         {
-            ViewData["Handboeken"] = new SelectList(_context.Cursus.Include("Handboek").Select(l => l.Handboek.Titel));
+            ViewData["Vak"] = new SelectList(_context.Vakken.Select(l => l.VakNaam));
             return View();
         }
 
@@ -62,13 +62,16 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Create([Bind("CursusId,CursusNaam,HandboekID,Handboek")] Cursus cursus)
+        public async Task<IActionResult> Create([Bind("CursusId,CursusNaam,VakID,Vak")] Cursus cursus)
         {
-            ViewData["Handboeken"] = new SelectList(_context.Handboeken);
+            ViewData["Vak"] = new SelectList(_context.Vakken.Select(l => l.VakNaam));
             if (ModelState.IsValid)
             {
                 if (_context.Handboeken.Any())
                 {
+                    var handboekid = _context.Vakken.Where(v => v.VakNaam == cursus.Vak.VakNaam).Select(v => v.HandboekID).FirstOrDefault();
+                    var handboek = _context.Handboeken.Where(h => h.HandboekID == handboekid).FirstOrDefault();
+                    cursus.Vak.Handboek = handboek;
                     _context.Add(cursus);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -85,6 +88,7 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["Vak"] = new SelectList(_context.Vakken.Select(l => l.VakNaam));
             if (id == null || _context.Cursus == null)
             {
                 return NotFound();
@@ -104,9 +108,9 @@ namespace HogeschoolPXL.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.admin)]
-        public async Task<IActionResult> Edit(int id, [Bind("CursusId,CursusNaam,HandboekID,Handboek")] Cursus cursus)
+        public async Task<IActionResult> Edit(int id, [Bind("CursusId,CursusNaam,VakID,Vak")] Cursus cursus)
         {
-            ViewData["Handboeken"] = new SelectList(_context.Handboeken);
+            ViewData["Vak"] = new SelectList(_context.Vakken.Select(l => l.VakNaam));
             if (id != cursus.CursusId)
             {
                 return NotFound();
@@ -116,6 +120,10 @@ namespace HogeschoolPXL.Controllers
             {
                 try
                 {
+                    // find the handboekid of the selected vak
+                    var handboekid = _context.Vakken.Where(v => v.VakNaam == cursus.Vak.VakNaam).Select(v => v.HandboekID).FirstOrDefault();
+                    var handboek = _context.Handboeken.Where(h => h.HandboekID == handboekid).FirstOrDefault();
+                    cursus.Vak.Handboek = handboek;
                     _context.Update(cursus);
                     await _context.SaveChangesAsync();
                 }

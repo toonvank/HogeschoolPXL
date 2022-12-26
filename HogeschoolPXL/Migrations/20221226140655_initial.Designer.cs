@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HogeschoolPXL.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221225123209_initial")]
+    [Migration("20221226140655_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,12 +51,12 @@ namespace HogeschoolPXL.Migrations
                     b.Property<string>("CursusNaam")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("HandboekID")
+                    b.Property<int>("VakID")
                         .HasColumnType("int");
 
                     b.HasKey("CursusId");
 
-                    b.HasIndex("HandboekID");
+                    b.HasIndex("VakID");
 
                     b.ToTable("Cursus");
                 });
@@ -105,7 +105,7 @@ namespace HogeschoolPXL.Migrations
                     b.Property<string>("Titel")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UitgifteDatum")
+                    b.Property<DateTime?>("UitgifteDatum")
                         .HasColumnType("datetime2");
 
                     b.HasKey("HandboekID");
@@ -173,16 +173,11 @@ namespace HogeschoolPXL.Migrations
                     b.Property<int>("GebruikerID")
                         .HasColumnType("int");
 
-                    b.Property<int?>("HandboekID")
-                        .HasColumnType("int");
-
                     b.HasKey("StudentID");
 
                     b.HasIndex("CursusID");
 
                     b.HasIndex("GebruikerID");
-
-                    b.HasIndex("HandboekID");
 
                     b.ToTable("Studenten");
                 });
@@ -205,6 +200,8 @@ namespace HogeschoolPXL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("VakId");
+
+                    b.HasIndex("HandboekID");
 
                     b.ToTable("Vakken");
                 });
@@ -432,11 +429,13 @@ namespace HogeschoolPXL.Migrations
 
             modelBuilder.Entity("HogeschoolPXL.Models.Cursus", b =>
                 {
-                    b.HasOne("HogeschoolPXL.Models.Handboek", "Handboek")
+                    b.HasOne("HogeschoolPXL.Models.Vak", "Vak")
                         .WithMany()
-                        .HasForeignKey("HandboekID");
+                        .HasForeignKey("VakID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Handboek");
+                    b.Navigation("Vak");
                 });
 
             modelBuilder.Entity("HogeschoolPXL.Models.Gebruiker", b =>
@@ -498,13 +497,18 @@ namespace HogeschoolPXL.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HogeschoolPXL.Models.Handboek", "Handboek")
-                        .WithMany()
-                        .HasForeignKey("HandboekID");
-
                     b.Navigation("Cursus");
 
                     b.Navigation("Gebruiker");
+                });
+
+            modelBuilder.Entity("HogeschoolPXL.Models.Vak", b =>
+                {
+                    b.HasOne("HogeschoolPXL.Models.Handboek", "Handboek")
+                        .WithMany()
+                        .HasForeignKey("HandboekID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Handboek");
                 });

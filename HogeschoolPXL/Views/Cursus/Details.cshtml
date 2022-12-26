@@ -16,8 +16,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CursusNaam)
         </dd>
+        <dt class = "col-sm-2">
+            Handboek
+            @*@Html.DisplayNameFor(model => model.Vak.Handboek.Titel)*@
+        </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Handboek.Titel)
+            @Html.DisplayFor(model => model.Vak.Handboek.Titel)
         </dd>
     </dl>
 </div>

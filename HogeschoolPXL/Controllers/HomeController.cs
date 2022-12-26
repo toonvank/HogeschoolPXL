@@ -33,7 +33,7 @@ namespace HogeschoolPXL.Controllers
         public IActionResult Index(HomeViewModel homeViewModel)
         {
             // find student by name linq query
-            foreach (var item in _context.Studenten.Include("Gebruiker"))
+            foreach (var item in _context.Studenten.Include("Gebruiker").Include("Cursus"))
             {
                 if (item.Gebruiker.Naam.ToLower().Contains(homeViewModel.searchQuery.ToLower()))
                 {

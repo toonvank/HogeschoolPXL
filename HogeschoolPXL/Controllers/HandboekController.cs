@@ -52,6 +52,7 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public IActionResult Create()
         {
+            ViewData["Vakken"] = _context.Vakken.ToList();
             return View();
         }
 
@@ -63,6 +64,7 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Create([Bind("HandboekID,Titel,UitgifteDatum,Afbeelding")] Handboek handboek)
         {
+            ViewData["Vakken"] = _context.Vakken.ToList();
             if (ModelState.IsValid)
             {
                 _context.Add(handboek);
@@ -76,6 +78,7 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewData["Vakken"] = _context.Vakken.ToList();
             if (id == null || _context.Handboeken == null)
             {
                 return NotFound();
@@ -97,6 +100,7 @@ namespace HogeschoolPXL.Controllers
         [Authorize(Roles = Roles.admin)]
         public async Task<IActionResult> Edit(int id, [Bind("HandboekID,Titel,UitgifteDatum,Afbeelding")] Handboek handboek)
         {
+            ViewData["Vakken"] = _context.Vakken.ToList();
             if (id != handboek.HandboekID)
             {
                 return NotFound();
@@ -157,6 +161,19 @@ namespace HogeschoolPXL.Controllers
             var handboek = await _context.Handboeken.FindAsync(id);
             if (handboek != null)
             {
+                // set handboek in vaklector to null to prevent foreign key constraint
+                var vaklectoren = _context.VakLectoren.Where(v => v.Vak.Handboek == handboek).ToList();
+                foreach (var vaklector in vaklectoren)
+                {
+                    // find vak in vaklector
+                    var vak = _context.Vakken.FirstOrDefault(v => v.VakId == vaklector.VakId);
+                    if (vak != null)
+                    {
+                        vak.Handboek = null;
+                        _context.Update(vak);
+                    }
+                    vaklector.Vak.Handboek = null;
+                }
                 _context.Handboeken.Remove(handboek);
             }
             

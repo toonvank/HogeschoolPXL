@@ -26,7 +26,7 @@ namespace HogeschoolPXL.Controllers
         // GET: Inschrijving
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").Include("Student.Cursus").Include("Student.Handboek").ToListAsync());
+            return View(await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").Include("Student.Cursus").Include("Student.Cursus.Vak.Handboek").Include("Student.Cursus.Vak").Include("VakLector.Lector.Gebruiker").ToListAsync());
         }
 
         // GET: Inschrijving/Details/5
@@ -37,7 +37,7 @@ namespace HogeschoolPXL.Controllers
                 return NotFound();
             }
 
-            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").Include("Student.Cursus").Include("Student.Handboek")
+            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").Include("Student.Cursus").Include("Student.Cursus.Vak").Include("Student.Cursus.Vak.Handboek").Include("VakLector.Lector.Gebruiker")
                 .FirstOrDefaultAsync(m => m.InschrijvingID == id);
             inschrijving.Student.Gebruiker = _context.Gebruiker.Find(inschrijving.Student.GebruikerID);
             if (inschrijving == null)
@@ -69,7 +69,11 @@ namespace HogeschoolPXL.Controllers
             {
                 if (_context.Studenten.Any())
                 {
-                    inschrijving.Student.Handboek = _context.Handboeken.FirstOrDefault();
+                    inschrijving.Student.Cursus = _context.Cursus.FirstOrDefault(c => c.CursusNaam == inschrijving.Student.Cursus.CursusNaam);
+                    // find vak by vaknaam in context and set it to the student
+                    inschrijving.Student.Cursus.Vak = _context.Vakken.FirstOrDefault();
+                    inschrijving.Student.Cursus.Vak.Handboek = _context.Handboeken.FirstOrDefault();
+                    inschrijving.VakLector = _context.VakLectoren.Include("Lector").Include("Lector.Gebruiker").FirstOrDefault(l => l.Lector.Gebruiker.Naam + " " + l.Lector.Gebruiker.Voornaam == inschrijving.VakLector.Lector.Gebruiker.Naam + " " + inschrijving.VakLector.Lector.Gebruiker.Voornaam);
                     _context.Add(inschrijving);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
@@ -87,13 +91,14 @@ namespace HogeschoolPXL.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
 
-            ViewData["Cursussen"] = new SelectList(_context.Cursus);
+            ViewData["VakLectoren"] = new SelectList(_context.VakLectoren.Include("Lector").Include("Lector.Gebruiker").Select(l => l.Lector.Gebruiker.Naam + " " + l.Lector.Gebruiker.Voornaam));
+            ViewData["Cursussen"] = new SelectList(_context.Cursus.Select(l => l.CursusNaam));
             if (id == null || _context.Inschrijvingen == null)
             {
                 return NotFound();
             }
 
-            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Cursus").Include("Student.Handboek").FirstOrDefaultAsync(m => m.InschrijvingID == id);
+            var inschrijving = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").Include("Student.Cursus").Include("Student.Cursus.Vak.Handboek").Include("Student.Cursus.Vak").Include("VakLector.Lector.Gebruiker").FirstOrDefaultAsync(m => m.InschrijvingID == id);
             inschrijving.Student.Gebruiker = _context.Gebruiker.Find(inschrijving.Student.GebruikerID);
             if (inschrijving == null)
             {
@@ -119,6 +124,10 @@ namespace HogeschoolPXL.Controllers
             {
                 try
                 {
+                    inschrijving.Student.Cursus.Vak = _context.Vakken.FirstOrDefault();
+                    inschrijving.Student.Cursus.Vak.Handboek = _context.Handboeken.FirstOrDefault();
+                    //inschrijving.VakLector = _context.VakLectoren.Include("Lector").Include("Lector.Gebruiker").FirstOrDefault(l => l.Lector.Gebruiker.Naam + " " + l.Lector.Gebruiker.Voornaam == inschrijving.VakLector.Lector.Gebruiker.Naam + " " + inschrijving.VakLector.Lector.Gebruiker.Voornaam);
+                    inschrijving.Student.Cursus = _context.Cursus.FirstOrDefault(c => c.CursusNaam == inschrijving.Student.Cursus.CursusNaam);
                     _context.Update(inschrijving);
                     await _context.SaveChangesAsync();
                 }

@@ -9,5 +9,6 @@ namespace HogeschoolPXL.Models
         public string? VakNaam { get; set; }
         public int Studiepunten { get; set; }
         public int HandboekID { get; set; }
+        public Handboek? Handboek { get; set; }
     }
 }

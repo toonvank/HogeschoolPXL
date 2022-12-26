@@ -68,27 +68,12 @@ namespace HogeschoolPXL.Migrations
                     HandboekID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Titel = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UitgifteDatum = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UitgifteDatum = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Afbeelding = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Handboeken", x => x.HandboekID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Vakken",
-                columns: table => new
-                {
-                    VakId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    VakNaam = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Studiepunten = table.Column<int>(type: "int", nullable: false),
-                    HandboekID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vakken", x => x.VakId);
                 });
 
             migrationBuilder.CreateTable(
@@ -220,22 +205,24 @@ namespace HogeschoolPXL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Cursus",
+                name: "Vakken",
                 columns: table => new
                 {
-                    CursusId = table.Column<int>(type: "int", nullable: false)
+                    VakId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CursusNaam = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    HandboekID = table.Column<int>(type: "int", nullable: true)
+                    VakNaam = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Studiepunten = table.Column<int>(type: "int", nullable: false),
+                    HandboekID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Cursus", x => x.CursusId);
+                    table.PrimaryKey("PK_Vakken", x => x.VakId);
                     table.ForeignKey(
-                        name: "FK_Cursus_Handboeken_HandboekID",
+                        name: "FK_Vakken_Handboeken_HandboekID",
                         column: x => x.HandboekID,
                         principalTable: "Handboeken",
-                        principalColumn: "HandboekID");
+                        principalColumn: "HandboekID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -258,35 +245,23 @@ namespace HogeschoolPXL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Studenten",
+                name: "Cursus",
                 columns: table => new
                 {
-                    StudentID = table.Column<int>(type: "int", nullable: false)
+                    CursusId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GebruikerID = table.Column<int>(type: "int", nullable: false),
-                    CursusID = table.Column<int>(type: "int", nullable: false),
-                    HandboekID = table.Column<int>(type: "int", nullable: true)
+                    CursusNaam = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VakID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Studenten", x => x.StudentID);
+                    table.PrimaryKey("PK_Cursus", x => x.CursusId);
                     table.ForeignKey(
-                        name: "FK_Studenten_Cursus_CursusID",
-                        column: x => x.CursusID,
-                        principalTable: "Cursus",
-                        principalColumn: "CursusId",
+                        name: "FK_Cursus_Vakken_VakID",
+                        column: x => x.VakID,
+                        principalTable: "Vakken",
+                        principalColumn: "VakId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Studenten_Gebruiker_GebruikerID",
-                        column: x => x.GebruikerID,
-                        principalTable: "Gebruiker",
-                        principalColumn: "GebruikerID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Studenten_Handboeken_HandboekID",
-                        column: x => x.HandboekID,
-                        principalTable: "Handboeken",
-                        principalColumn: "HandboekID");
                 });
 
             migrationBuilder.CreateTable(
@@ -312,6 +287,32 @@ namespace HogeschoolPXL.Migrations
                         column: x => x.VakId,
                         principalTable: "Vakken",
                         principalColumn: "VakId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Studenten",
+                columns: table => new
+                {
+                    StudentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GebruikerID = table.Column<int>(type: "int", nullable: false),
+                    CursusID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Studenten", x => x.StudentID);
+                    table.ForeignKey(
+                        name: "FK_Studenten_Cursus_CursusID",
+                        column: x => x.CursusID,
+                        principalTable: "Cursus",
+                        principalColumn: "CursusId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Studenten_Gebruiker_GebruikerID",
+                        column: x => x.GebruikerID,
+                        principalTable: "Gebruiker",
+                        principalColumn: "GebruikerID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -386,9 +387,9 @@ namespace HogeschoolPXL.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cursus_HandboekID",
+                name: "IX_Cursus_VakID",
                 table: "Cursus",
-                column: "HandboekID");
+                column: "VakID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Gebruiker_IdentityUserID",
@@ -426,8 +427,8 @@ namespace HogeschoolPXL.Migrations
                 column: "GebruikerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Studenten_HandboekID",
-                table: "Studenten",
+                name: "IX_Vakken_HandboekID",
+                table: "Vakken",
                 column: "HandboekID");
 
             migrationBuilder.CreateIndex(
@@ -483,10 +484,10 @@ namespace HogeschoolPXL.Migrations
                 name: "Vakken");
 
             migrationBuilder.DropTable(
-                name: "Handboeken");
+                name: "Gebruiker");
 
             migrationBuilder.DropTable(
-                name: "Gebruiker");
+                name: "Handboeken");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
