@@ -1,5 +1,5 @@
 ﻿@model HogeschoolPXL.Models.ViewModels.RegisterViewModel
-<div class="row">
+@*<div class="row">
     <div class="col-md-4">
         <form asp-action="Register">
             <h1>Register</h1>
@@ -24,4 +24,53 @@
             </div>
         </form>
     </div>
-</div>
+</div>*@
+
+<!-- bron: https://mdbootstrap.com/docs/standard/extended/login/-->
+<section class="text-center">
+  <div class="card mx-4 mx-md-5 shadow-5-strong" style="
+        margin-top: 100px;
+        background-color: #091A2F;
+        backdrop-filter: blur(30px);
+        border-radius:40px;
+        ">
+    <div class="card-body py-5 px-md-5">
+    <div asp-validation-summary="All" class="text-danger"></div>
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-8">
+          <h2 class="fw-bold mb-5" style="color:whitesmoke;">Sign up now</h2>
+          <form asp-action="Register">
+            <div class="row">
+              <div class="form-outline mb-4">
+                <div class="form-outline">
+                    <select asp-for="TempRole" class="form-control" asp-items="ViewBag.RoleId" style="background-color: #3A4859; border-color:lightyellow; color:#D0D4D6;" ></select>
+                    <span asp-validation-for="TempRole" class="text-danger"></span>
+                    <label asp-for="TempRole" style="color:whitesmoke;" class="control-label"></label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                <input asp-for="Email" class="form-control" style="background-color: #3A4859; border-color:lightyellow; color:#D0D4D6;"  />
+                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Email" style="color:whitesmoke;" class="control-label"></label>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                <input asp-for="Password" class="form-control" style="background-color: #3A4859; border-color:lightyellow; color:#D0D4D6;" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+                <label asp-for="Password" style="color:whitesmoke;" class="control-label"></label>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" value="Register" style="background-color: #3A4859; border-color:lightyellow;" class="btn btn-primary btn-block mb-4 w-25">
+              Sign up
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

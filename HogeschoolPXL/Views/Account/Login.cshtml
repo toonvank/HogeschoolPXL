@@ -1,5 +1,5 @@
 ﻿@model HogeschoolPXL.Models.ViewModels.LoginViewModel
-<div class="row">
+@*<div class="row">
     <div class="col-md-4">
     <form asp-action="Login">
         <h1>Login</h1>
@@ -22,4 +22,46 @@
 </div>
 <div>
     <a asp-action="Register">Registreer een nieuwe gebruiker</a>
-</div>
+</div>*@
+
+<!-- bron: https://mdbootstrap.com/docs/standard/extended/login/-->
+<section class="text-center">
+  <div class="card mx-md-5 shadow-5-strong" style="
+        margin-top: 100px;
+        background-color: #091A2F;
+        backdrop-filter: blur(30px);
+        border-radius:40px;
+        ">
+    <div class="card-body py-5 px-md-5">
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-4">
+          <h2 class="fw-bold mb-5" style="color:whitesmoke;">Log in now</h2>
+          <form asp-action="Login">
+            <div class="row">
+              <div class="form-outline mb-4">
+                <div class="form-outline">
+                    <label asp-for="Email" class="control-label" style="color:whitesmoke;" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" style="background-color: #3A4859; border-color:lightyellow; color:#D0D4D6;" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                <label asp-for="Password" class="control-label" style="color:whitesmoke;" class="control-label"></label>
+                <input asp-for="Password" class="form-control" style="background-color: #3A4859; border-color:lightyellow; color:#D0D4D6;"/>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <!-- Submit button -->
+            <button type="submit" value="Login" style="background-color: #3A4859; border-color:lightyellow;" class="btn btn-primary btn-block mb-4 w-25">
+              Login
+            </button>
+            <div asp-validation-summary="All" class="text-danger"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
