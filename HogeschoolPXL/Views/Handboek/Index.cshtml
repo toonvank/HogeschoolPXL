@@ -9,39 +9,17 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Titel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UitgifteDatum)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Afbeelding)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="d-flex flex-row flex-wrap">
 @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Titel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UitgifteDatum)
-            </td>
-            <td>
-                <img style="height: 300px;width:auto;" src="@Html.DisplayFor(modelItem => item.Afbeelding)"/>
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.HandboekID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.HandboekID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.HandboekID">Delete</a>
-            </td>
-        </tr>
+        <div class="card" style="width: 18rem; margin-right:40px; margin-bottom:10px;">
+        <img class="card-img-top" height="90%" width="auto" src="@Html.DisplayFor(modelItem => item.Afbeelding)" alt="Card image cap">
+        <div class="card-body">
+        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Titel)</h5>
+        <p class="card-text">Uitgebracht op @Html.DisplayFor(modelItem => item.UitgifteDatum)</p>
+        <a asp-action="Edit" asp-route-id="@item.HandboekID" class="btn btn-primary">Edit</a>
+        <a asp-action="Details" asp-route-id="@item.HandboekID" class="btn btn-primary">Details</a>
+        <a asp-action="Delete" asp-route-id="@item.HandboekID" class="btn btn-primary">Delete</a>
+        </div>
+    </div>
 }
-    </tbody>
-</table>
+</div>

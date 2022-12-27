@@ -62,6 +62,7 @@ namespace HogeschoolPXL.Controllers
             ViewData["Handboeken"] = new SelectList(_context.Handboeken.Select(l => l.Titel));
             //if (ModelState.IsValid)
             //{
+                vakLector.Vak.Handboek = _context.Handboeken.Where(h => h.Titel == vakLector.Vak.Handboek.Titel).FirstOrDefault();
                 _context.Add(vakLector);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
