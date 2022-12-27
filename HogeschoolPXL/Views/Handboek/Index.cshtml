@@ -9,16 +9,16 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<div class="d-flex flex-row flex-wrap justify-content-between">
+<div class="d-flex flex-wrap justify-content-between" style="flex-basis: 100%;">
 @foreach (var item in Model) {
-        <div class="card" style="width: 18rem; margin-right:40px; margin-bottom:10px;">
-        <img class="card-img-top" height="90%" width="auto" src="@Html.DisplayFor(modelItem => item.Afbeelding)" alt="Card image cap">
-        <div class="card-body">
-        <h5 class="card-title">@Html.DisplayFor(modelItem => item.Titel)</h5>
-        <p class="card-text">Uitgebracht op @Html.DisplayFor(modelItem => item.UitgifteDatum)</p>
-        <a asp-action="Edit" asp-route-id="@item.HandboekID" class="btn btn-primary">Edit</a>
-        <a asp-action="Details" asp-route-id="@item.HandboekID" class="btn btn-primary">Details</a>
-        <a asp-action="Delete" asp-route-id="@item.HandboekID" class="btn btn-primary">Delete</a>
+        <div class="card" style="width: 18rem; margin-bottom:3%;flex-shrink: 0;">
+            <img class="card-img-top" height="90%" width="auto" src="@Html.DisplayFor(modelItem => item.Afbeelding)" alt="Card image cap">
+            <div class="card-body">
+            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Titel)</h5>
+            <p class="card-text">Uitgebracht op @Html.DisplayFor(modelItem => item.UitgifteDatum)</p>
+            <a asp-action="Edit" asp-route-id="@item.HandboekID" class="btn btn-primary">Edit</a>
+            <a asp-action="Details" asp-route-id="@item.HandboekID" class="btn btn-primary">Details</a>
+            <a asp-action="Delete" asp-route-id="@item.HandboekID" class="btn btn-primary">Delete</a>
         </div>
     </div>
 }
