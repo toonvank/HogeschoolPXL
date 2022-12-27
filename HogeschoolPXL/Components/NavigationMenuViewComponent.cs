@@ -15,11 +15,9 @@ namespace HogeschoolPXL.Components
         {
             ViewBag.SelectedCategory = RouteData?.Values["category"];
             return View(_context.VakLectoren.Include("Lector.Gebruiker").Include("Lector")
-            .Select(x => x.Lector.Gebruiker.Naam)
+            .Select(x => x.Lector.Gebruiker.Voornaam.Substring(0,1) + ". " + x.Lector.Gebruiker.Naam)
             .Distinct()
             .OrderBy(x => x));
-            // return view all lector.gebruiker.naam from vaklectoren
-
         }
     }
 }

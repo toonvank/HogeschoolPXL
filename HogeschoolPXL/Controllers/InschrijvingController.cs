@@ -80,10 +80,8 @@ namespace HogeschoolPXL.Controllers
                 if (_context.Studenten.Any())
                 {
                     inschrijving.Student.Cursus = _context.Cursus.FirstOrDefault(c => c.CursusNaam == inschrijving.Student.Cursus.CursusNaam);
-                    // find vak by vaknaam in context and set it to the student
-                    inschrijving.Student.Cursus.Vak = _context.Vakken.FirstOrDefault();
-                    inschrijving.Student.Cursus.Vak.Handboek = _context.Handboeken.FirstOrDefault();
                     inschrijving.VakLector = _context.VakLectoren.Include("Lector").Include("Lector.Gebruiker").FirstOrDefault(l => l.Lector.Gebruiker.Naam + " " + l.Lector.Gebruiker.Voornaam == inschrijving.VakLector.Lector.Gebruiker.Naam + " " + inschrijving.VakLector.Lector.Gebruiker.Voornaam);
+                    inschrijving.VakLector.Vak = _context.Vakken.Include("Handboek").FirstOrDefault(v => v.VakId == inschrijving.VakLector.VakId);
                     _context.Add(inschrijving);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

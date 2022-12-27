@@ -13,6 +13,7 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="InschrijvingID" />
+            <h4>Student</h4>
             <div class="form-group">
                 <label asp-for="Student.Gebruiker.Naam" class="control-label"></label>
                 <input asp-for="Student.Gebruiker.Naam" class="form-control" />
@@ -33,6 +34,7 @@
                 <select asp-for="Student.Cursus.CursusNaam" class="form-control" asp-items="ViewBag.Cursussen"></select>
                 <span asp-validation-for="Student.Cursus.CursusNaam" class="text-danger"></span>
             </div>
+            <h4>AcademieJaar</h4>
             <div class="form-group">
                 <label asp-for="AcademieJaar.StartDatum" class="control-label"></label>
                 <input asp-for="AcademieJaar.StartDatum" class="form-control" />

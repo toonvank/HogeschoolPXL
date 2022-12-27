@@ -12,6 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <h4>Student</h4>
             <div class="form-group">
                 <label asp-for="Student.Gebruiker.Naam" class="control-label"></label>
                 <input asp-for="Student.Gebruiker.Naam" class="form-control" />
@@ -27,22 +28,25 @@
                 <input asp-for="Student.Gebruiker.Email" class="form-control" />
                 <span asp-validation-for="Student.Gebruiker.Email" class="text-danger"></span>
             </div>
+            <h4 class="mt-3">VakLector</h4>
             <div class="form-group">
                 <label asp-for="VakLector.Lector.Gebruiker.Naam" class="control-label"></label>
                 <select asp-for="VakLector.Lector.Gebruiker.Naam" class="form-control" asp-items="ViewBag.VakLectoren"></select>
                 <span asp-validation-for="VakLector.Lector.Gebruiker.Naam" class="text-danger"></span>
             </div>
+            <h4 class="mt-3">Student</h4>
             <div class="form-group">
                 <label asp-for="Student.Cursus.CursusNaam" class="control-label"></label>
                 <select asp-for="Student.Cursus.CursusNaam" class="form-control" asp-items="ViewBag.Cursussen"></select>
                 <span asp-validation-for="Student.Cursus.CursusNaam" class="text-danger"></span>
             </div>
+            <h4 class="mt-3">AcademieJaar</h4>
             <div class="form-group">
                 <label asp-for="AcademieJaar.StartDatum" class="control-label"></label>
                 <input asp-for="AcademieJaar.StartDatum" class="form-control" />
                 <span asp-validation-for="AcademieJaar.StartDatum" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

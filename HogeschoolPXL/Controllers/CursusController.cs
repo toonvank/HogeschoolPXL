@@ -69,9 +69,14 @@ namespace HogeschoolPXL.Controllers
             {
                 if (_context.Handboeken.Any())
                 {
+                    // find vak with same name as the one in the cursus object
+                    var vak = _context.Vakken.FirstOrDefault(v => v.VakNaam == cursus.Vak.VakNaam);
+                    cursus.Vak = vak;
+
                     var handboekid = _context.Vakken.Where(v => v.VakNaam == cursus.Vak.VakNaam).Select(v => v.HandboekID).FirstOrDefault();
                     var handboek = _context.Handboeken.Where(h => h.HandboekID == handboekid).FirstOrDefault();
                     cursus.Vak.Handboek = handboek;
+
                     _context.Add(cursus);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));

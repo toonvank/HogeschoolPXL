@@ -55,7 +55,6 @@ namespace HogeschoolPXL.Controllers
             ViewData["RoleId"] = new SelectList(_context.Roles);
             return View();
         }
-        // HTTP POST iaction register
         [HttpPost]
         public async Task<IActionResult> RegisterAsync(RegisterViewModel registerViewModel)
         {
@@ -70,8 +69,6 @@ namespace HogeschoolPXL.Controllers
                     var identityResult = await _userManager.CreateAsync(identityUser, registerViewModel.Password);
                     if (identityResult.Succeeded)
                     {
-                        //var identityRole = await _roleManager.FindByNameAsync(registerViewModel.TempRole);
-                        //var roleResult = await _userManager.AddToRoleAsync(identityUser, identityRole.Name);
 
                         Gebruiker g = new Gebruiker() { Email = registerViewModel.Email, TempRole = registerViewModel.TempRole, Naam = identityUser.UserName, Voornaam = identityUser.UserName, IdentityUserID = identityUser.Id, IdentityUser = identityUser};
                         _context.Gebruiker.Add(g);
@@ -83,7 +80,6 @@ namespace HogeschoolPXL.Controllers
                         {
                             return RedirectToAction("Index", "Home");
                         }
-                        //return View("RegistrationCompleted");
                     }
                     foreach (var error in identityResult.Errors)
                     {
