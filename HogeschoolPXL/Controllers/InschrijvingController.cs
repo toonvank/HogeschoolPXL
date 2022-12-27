@@ -26,7 +26,17 @@ namespace HogeschoolPXL.Controllers
         // GET: Inschrijving
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").Include("Student.Cursus").Include("Student.Cursus.Vak.Handboek").Include("Student.Cursus.Vak").Include("VakLector.Lector.Gebruiker").ToListAsync());
+            //get properties from url
+            var lector = Request.Query["category"];
+            if (lector.Count >0)
+            {
+                var list = await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").Include("Student.Cursus").Include("Student.Cursus.Vak.Handboek").Include("Student.Cursus.Vak").Include("VakLector.Lector.Gebruiker").ToListAsync();
+                return View(list.Where(x => x.VakLector.Lector.Gebruiker.Naam == lector));
+            }
+            else
+            {
+                return View(await _context.Inschrijvingen.Include("Student").Include("VakLector").Include("AcademieJaar").Include("Student.Gebruiker").Include("Student.Cursus").Include("Student.Cursus.Vak.Handboek").Include("Student.Cursus.Vak").Include("VakLector.Lector.Gebruiker").ToListAsync());
+            }
         }
 
         // GET: Inschrijving/Details/5
