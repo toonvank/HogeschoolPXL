@@ -16,3 +16,8 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.child {
+    width: 18rem;
+    border-left-width: 5px;
+}

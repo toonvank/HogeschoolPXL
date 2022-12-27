@@ -4,12 +4,39 @@
 }
 
 <form asp-action="Index" method="post">
-    <div class="form-group">
-        <label asp-for="searchQuery" class="control-label">Zoek student op naam</label>
-        <input asp-for="searchQuery" class="form-control" />
+<h2 style="text-align: center;" class="mb-4">Welkom op HogeschoolPXL</h2>
+<div class="d-flex flex-row flex-wrap justify-content-between mb-4">
+    <div class="card child" style="width: 18rem;border-left-color: #5477DF;">
+        <div class="card-body">
+            <h6 class="card-title">Gebruikers</h6>
+            <h3 class="card-title">@ViewBag.Gebruikers</h3>
+        </div>
     </div>
-    <div class="form-group">
-        <input type="submit" value="Search" class="btn btn-primary" />
+    <div class="card child" style="width: 18rem;border-left-color: #01C37B;">
+        <div class="card-body">
+            <h6 class="card-title">Inschrijvingen</h6>
+            <h3 class="card-title">@ViewBag.Inschrijvingen</h3>
+        </div>
     </div>
-    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="card child" style="width: 18rem;border-left-color: #F8C135;">
+        <div class="card-body">
+            <h6 class="card-title">VakLectoren</h6>
+            <h3 class="card-title">@ViewBag.VakLectoren</h3>
+        </div>
+    </div>
+    <div class="card child" style="width: 18rem;border-left-color: #9593FE;">
+        <div class="card-body">
+            <h6 class="card-title">Handboeken</h6>
+            <h3 class="card-title">@ViewBag.Handboeken</h3>
+        </div>
+    </div>
+</div>
+<div class="form-group mb-2">
+    <label asp-for="searchQuery" class="control-label">Zoek student op naam</label>
+    <input asp-for="searchQuery" class="form-control" />
+</div>
+<div class="form-group">
+    <input type="submit" value="Search" class="btn btn-primary" />
+</div>
+<div asp-validation-summary="All" class="text-danger"></div>
 </form>

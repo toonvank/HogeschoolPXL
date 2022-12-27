@@ -27,6 +27,10 @@ namespace HogeschoolPXL.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            ViewData["Inschrijvingen"] = _context.Inschrijvingen.Count();
+            ViewData["VakLectoren"] = _context.VakLectoren.Count();
+            ViewData["Handboeken"] = _context.Handboeken.Count();
+            ViewData["Gebruikers"] = _context.Gebruiker.Count();
             return View();
         }
         [HttpPost]
