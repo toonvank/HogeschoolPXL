@@ -1,4 +1,4 @@
 (function alert()
 {
-  alert('test')
+  alert('testt')
 }).call(this)
