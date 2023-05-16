@@ -1,1 +1,4 @@
-<script>alert('test')</script>
+function alert()
+{
+  alert('test')
+}
